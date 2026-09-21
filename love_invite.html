@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>💌 有件小事想问你</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+  body {
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+    background: linear-gradient(135deg,#ffdde1,#ee9ca7,#ffc3a0);
+    display:flex; align-items:center; justify-content:center;
+  }
+  /* 飘落的爱心 */
+  .heart { position:fixed; top:-40px; font-size:22px; animation: fall linear infinite; z-index:0; pointer-events:none; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity:.2; } }
+
+  .card {
+    position:relative; z-index:1; width:min(92vw,420px);
+    background:rgba(255,255,255,.92); border-radius:28px;
+    padding:36px 26px 90px; text-align:center;
+    box-shadow:0 18px 50px rgba(238,107,122,.35);
+    animation: pop .6s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes pop { from { transform:scale(.6); opacity:0; } }
+  h1 { font-size:30px; color:#e8556e; margin-bottom:8px; }
+  h2 { font-size:24px; color:#e8556e; margin-bottom:6px; }
+  .sub { color:#9a8d95; font-size:15px; margin-bottom:24px; }
+  .big-emoji { font-size:64px; margin:10px 0; animation:beat 1.2s infinite; display:inline-block; }
+  @keyframes beat { 0%,100%{transform:scale(1)} 30%{transform:scale(1.18)} }
+
+  .opts { display:flex; flex-direction:column; gap:14px; }
+  .opt {
+    background:linear-gradient(135deg,#fff0f3,#ffe3ea);
+    border:2px solid #ffc9d4; border-radius:18px;
+    padding:15px 18px; font-size:17px; color:#c2185b;
+    cursor:pointer; transition:.25s; display:flex; align-items:center; gap:12px;
+  }
+  .opt .ico { font-size:30px; }
+  .opt:active, .opt:hover { transform:scale(1.04); background:#ffd7e0; box-shadow:0 8px 18px rgba(232,85,110,.25); }
+
+  /* 自选时间输入 */
+  .opt.custom { cursor:default; flex-wrap:wrap; border-style:solid; background:#fff; }
+  .opt.custom:hover { transform:none; }
+  .opt.custom input {
+    flex:1; min-width:120px; border:none; border-bottom:2px dashed #f8b3c3;
+    background:transparent; font-size:16px; color:#c2185b; padding:6px 4px; outline:none;
+  }
+  .opt.custom input::placeholder { color:#d8aab6; font-size:14px; }
+  .mini {
+    background:linear-gradient(135deg,#ff7e9a,#e8556e); color:#fff; border:none;
+    border-radius:999px; padding:8px 16px; font-size:14px; cursor:pointer; white-space:nowrap;
+  }
+  .mini:active { transform:scale(.94); }
+
+  .step { display:none; }
+  .step.on { display:block; animation:pop .5s cubic-bezier(.2,1.4,.4,1); }
+
+  /* 躲猫猫的拒绝按钮 */
+  #noBtn {
+    position:fixed; z-index:9;
+    background:#fff; border:2px dashed #f48fb1; color:#f06292;
+    border-radius:999px; padding:12px 26px; font-size:16px;
+    box-shadow:0 6px 16px rgba(240,98,146,.25);
+    transition:left .18s, top .18s, transform .18s;
+    cursor:pointer; max-width:60vw;
+  }
+  #noBtn.harder { background:#ffe0e9; }
+
+  .final-list {
+    text-align:left; background:#fff8fa; border:2px solid #ffd6e0;
+    border-radius:18px; padding:20px; margin:18px 0;
+    font-size:17px; line-height:2.1; color:#6d4c5b;
+  }
+  .final-list b { color:#e8556e; }
+  .btnrow { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .act {
+    background:linear-gradient(135deg,#ff7e9a,#e8556e); color:#fff;
+    border:none; border-radius:999px; padding:14px 26px; font-size:16px;
+    box-shadow:0 8px 20px rgba(232,85,110,.4); cursor:pointer;
+  }
+  .act:active { transform:scale(.96); }
+  #copyTip { color:#2e9e5b; font-size:14px; margin-top:10px; height:18px; }
+  canvas { max-width:100%; border-radius:16px; box-shadow:0 10px 26px rgba(0,0,0,.15); margin-top:14px; }
+  .hint { font-size:13px; color:#b3a6ae; margin-top:10px; }
+
+  /* 音乐开关（右上角悬浮） */
+  #musicBtn {
+    position:fixed; top:18px; right:18px; z-index:20;
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(255,255,255,.9); border:2px solid #ffc9d4;
+    font-size:24px; cursor:pointer; line-height:1;
+    box-shadow:0 6px 16px rgba(232,85,110,.3); transition:.2s;
+  }
+  #musicBtn:active { transform:scale(.9); }
+  #musicBtn.spin::before { content:""; }
+</style>
+</head>
+<body>
+<div id="hearts"></div>
+
+<div class="card">
+  <!-- Step 1 时间 -->
+  <div class="step on" id="s1">
+    <div class="big-emoji">💌</div>
+    <h1>我们去约会吧！</h1>
+    <p class="sub">就…那个…我想见你 👉👈</p>
+    <div class="opts" id="timeOpts">
+      <div class="opt" data-v="本周六下午"><span class="ico">🌷</span>本周六下午，阳光正好</div>
+      <div class="opt" data-v="本周六晚上"><span class="ico">🌙</span>本周六晚上，夜色刚好</div>
+      <div class="opt" data-v="本周日全天"><span class="ico">☀️</span>本周日全天，都听你的</div>
+      <div class="opt" data-v="下周五晚上"><span class="ico">🌆</span>下周五晚上，下了班就来</div>
+      <div class="opt" data-v="遇到假期就出发"><span class="ico">🎆</span>遇到假期就出发，说走就走</div>
+      <div class="opt" data-v="时间你说了算"><span class="ico">🏳️</span>你说了算，我随时有空</div>
+      <div class="opt custom" id="customTimeOpt">
+        <span class="ico">✍️</span>
+        <input type="text" id="customTimeInput" placeholder="写个时间吧，如：周三晚7点">
+        <button class="mini" id="customTimeBtn">就这个！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 地点 -->
+  <div class="step" id="s2">
+    <div class="big-emoji">🗺️</div>
+    <h2>那…去哪里呀？</h2>
+    <p class="sub">我已经开始期待啦 ✨</p>
+    <div class="opts" id="placeOpts">
+      <div class="opt" data-v="图书馆"><span class="ico">📚</span>图书馆，安安静静待一下午</div>
+      <div class="opt" data-v="电影院附近"><span class="ico">🎡</span>电影院那边，热闹</div>
+      <div class="opt" data-v="游乐园"><span class="ico">🎢</span>游乐园！我想坐旋转木马</div>
+      <div class="opt" data-v="江边/湖边"><span class="ico">🏞️</span>江边走走，吹吹风</div>
+      <div class="opt" data-v="大学校园"><span class="ico">🎓</span>大学校园，回忆杀走一波</div>
+      <div class="opt" data-v="市中心随便逛"><span class="ico">🏙️</span>市中心，逛到哪算哪</div>
+      <div class="opt" data-v="公园"><span class="ico">🌳</span>公园，闻闻青草味</div>
+      <div class="opt" data-v="海边（如果有的话）"><span class="ico">🏖️</span>海边！踩水那种</div>
+      <div class="opt" data-v="博物馆/美术馆附近"><span class="ico">🏛️</span>博物馆附近，有格调</div>
+      <div class="opt" data-v="你家楼下"><span class="ico">🏠</span>你家楼下，我等你下来</div>
+      <div class="opt" data-v="你挑的地方"><span class="ico">📍</span>你挑的地方都好</div>
+      <div class="opt custom" id="customPlaceOpt">
+        <span class="ico">✍️</span>
+        <input type="text" id="customPlaceInput" placeholder="写个地方吧，如：人民公园门口">
+        <button class="mini" id="customPlaceBtn">就这里！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 干什么 -->
+  <div class="step" id="s3">
+    <div class="big-emoji">💭</div>
+    <h2>我们干什么呀？</h2>
+    <p class="sub">选一个嘛，都可以哦 🥰</p>
+    <div class="opts" id="actOpts">
+      <div class="opt" data-v="看电影（爆米花已预订）"><span class="ico">🍿🕶️</span>看场电影，爆米花我请</div>
+      <div class="opt" data-v="游乐园一日游"><span class="ico">🎠🎈</span>游乐园，棉花糖那种</div>
+      <div class="opt" data-v="散步聊天到月亮出来"><span class="ico">🌙🚶</span>散散步，聊到月亮出来</div>
+      <div class="opt" data-v="吃一顿好吃的"><span class="ico">🍽️🍰</span>吃顿好的，甜品必须有</div>
+      <div class="opt" data-v="小吃街扫街"><span class="ico">🍢🍡</span>小吃街！从头吃到尾</div>
+      <div class="opt" data-v="一起做饭/烘焙"><span class="ico">👨‍🍳🧁</span>一起做饭，黑暗料理也行</div>
+      <div class="opt" data-v="咖啡馆发呆"><span class="ico">☕🐱</span>咖啡馆坐着，一起发呆</div>
+      <div class="opt" data-v="KTV（我唱你鼓掌）"><span class="ico">🎤🎶</span>KTV，我唱歌你负责鼓掌</div>
+      <div class="opt" data-v="密室逃脱（怕了抓住我）"><span class="ico">🔓🔦</span>密室逃脱，害怕就抓住我</div>
+      <div class="opt" data-v="看展览（装文艺青年）"><span class="ico">🖼️🏛️</span>看个展览，文艺一把</div>
+      <div class="opt" data-v="公园野餐（毯子我带）"><span class="ico">🧺🌷</span>公园野餐，三明治我包了</div>
+      <div class="opt" data-v="去看日出或日落"><span class="ico">🌅⛰️</span>去看日出/日落，浪漫限定</div>
+      <div class="opt" data-v="逛街（你试穿我拎包）"><span class="ico">🛍️👜</span>逛街，你试穿我拎包</div>
+      <div class="opt" data-v="猫咖撸猫（猫猫优先）"><span class="ico">🐈🐾</span>猫咖撸猫，猫猫第一我们第二</div>
+      <div class="opt" data-v="图书馆看书"><span class="ico">📖🤫</span>图书馆，一人一本书不说话</div>
+      <div class="opt" data-v="打电玩/抓娃娃"><span class="ico">🎮🧸</span>电玩城，娃娃我帮你抓</div>
+      <div class="opt" data-v="拍照记录这一天"><span class="ico">📸🎞️</span>拍一组照片，记录这一天</div>
+      <div class="opt" data-v="喝茶聊天"><span class="ico">🍵😤</span>茶馆坐坐，唠一下午嗑</div>
+      <div class="opt" data-v="找个地方看星星"><span class="ico">⭐🌌</span>看星星，许愿那种</div>
+      <div class="opt custom" id="customActOpt">
+        <span class="ico">✍️</span>
+        <input type="text" id="customActInput" placeholder="写个想干的吧，如：一起拼一千片拼图">
+        <button class="mini" id="customActBtn">就这个！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 清单 -->
+  <div class="step" id="s4">
+    <div class="big-emoji">💖</div>
+    <h2>约会清单生成啦！</h2>
+    <p class="sub">就这么说定啦，不许反悔哦 🥺</p>
+    <div class="final-list" id="finalList"></div>
+    <div class="btnrow">
+      <button class="act" id="copyBtn">📋 一键复制告白</button>
+      <button class="act" id="imgBtn">🖼️ 生成清单卡片</button>
+    </div>
+    <div id="copyTip"></div>
+    <div id="imgBox"></div>
+    <p class="hint">生成卡片后长按保存，发回给那个人 💘</p>
+  </div>
+</div>
+
+<button id="noBtn">再想想…</button>
+<button id="musicBtn" title="音乐开关">🎵</button>
+
+<script>
+// ---- 飘落的爱心 ----
+const heartEmojis = ["💖","💗","💓","💘","💕","🌸"];
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  h.style.left = Math.random()*100 + "vw";
+  h.style.animationDuration = 4 + Math.random()*4 + "s";
+  h.style.fontSize = 14 + Math.random()*20 + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 9000);
+}, 500);
+
+// ---- 流程状态 ----
+const picked = { time:"", place:"", act:"" };
+const steps = ["s1","s2","s3","s4"];
+function goStep(id) {
+  steps.forEach(s => document.getElementById(s).classList.toggle("on", s === id));
+  if (id === "s4") renderFinal();
+  // 拒绝按钮每步重新随机位置
+  jumpNo();
+}
+function bindOpts(id, key, next) {
+  document.getElementById(id).addEventListener("click", e => {
+    const opt = e.target.closest(".opt");
+    if (!opt) return;
+    picked[key] = opt.dataset.v;
+    goStep(next);
+  });
+}
+bindOpts("timeOpts", "time", "s2");
+bindOpts("placeOpts", "place", "s3");
+bindOpts("actOpts", "act", "s4");
+
+// 自填选项（时间/地点/活动通用）：点选项聚焦输入，点按钮或回车进入下一步
+function bindCustom(optId, inputId, btnId, key, next, fallback) {
+  const opt = document.getElementById(optId);
+  const inp = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  opt.addEventListener("click", e => { e.stopPropagation(); inp.focus(); });
+  inp.addEventListener("click", e => e.stopPropagation());
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") btn.click(); });
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    picked[key] = inp.value.trim() || fallback;
+    goStep(next);
+  });
+}
+bindCustom("customTimeOpt", "customTimeInput", "customTimeBtn", "time", "s2", "你定的时间（记得告诉我呀）");
+bindCustom("customPlaceOpt", "customPlaceInput", "customPlaceBtn", "place", "s3", "你定的地方（等你发位置）");
+bindCustom("customActOpt", "customActInput", "customActBtn", "act", "s4", "你想干的都行（快告诉我）");
+
+// ---- 最终清单 ----
+function renderFinal() {
+  document.getElementById("finalList").innerHTML =
+    `🕐 <b>时间：</b>${picked.time}<br>` +
+    `📍 <b>地点：</b>${picked.place}<br>` +
+    `💫 <b>做什么：</b>${picked.act}<br>` +
+    `💌 <b>备注：</b>我要见到你，谁都不许迟到！`;
+  notifySender();
+}
+
+// ---- 自动通知发送人（Server酱·微信推送）----
+// 在这里填入你的 SendKey（sct.ftqq.com 微信扫码免费领取），留空则关闭此功能。
+// 对方选完的瞬间，你会收到微信推送：「约会邀请有回复啦」。
+const SEND_KEY = "";
+function notifySender() {
+  if (!SEND_KEY || notifySender.done) return;
+  notifySender.done = true;                       // 只通知一次
+  const desp = `💘 对方选好啦！\n\n🕐 时间：${picked.time}\n📍 地点：${picked.place}\n💫 做什么：${picked.act}\n\n快去准备吧，不许迟到 💌`;
+  fetch(`https://sctapi.ftqq.com/${SEND_KEY}.send`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "title=" + encodeURIComponent("💌 约会邀请有回复啦") +
+          "&desp=" + encodeURIComponent(desp),
+  }).catch(() => {});                             // 静默失败，不影响页面
+}
+
+// ---- 复制告白 ----
+document.getElementById("copyBtn").onclick = () => {
+  const text = `【约会确认书 ♥】\n时间：${picked.time}\n地点：${picked.place}\n做什么：${picked.act}\n—— 已由本人郑重勾选，答应的事不许反悔哦 💌`;
+  const done = () => {
+    const tip = document.getElementById("copyTip");
+    tip.textContent = "已复制！粘贴发回去吧 💘";
+    setTimeout(() => tip.textContent = "", 2500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else fallbackCopy(text, done);
+};
+function fallbackCopy(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text; document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); done(); } catch(e){}
+  ta.remove();
+}
+
+// ---- 清单卡片（canvas 可长按保存）----
+document.getElementById("imgBtn").onclick = () => {
+  const c = document.createElement("canvas");
+  c.width = 750; c.height = 960;
+  const g = c.getContext("2d");
+  const grad = g.createLinearGradient(0,0,750,960);
+  grad.addColorStop(0,"#ffdde1"); grad.addColorStop(.6,"#ffb6c6"); grad.addColorStop(1,"#ffc3a0");
+  g.fillStyle = grad; g.fillRect(0,0,750,960);
+  // 白色圆角卡
+  g.fillStyle = "rgba(255,255,255,.93)";
+  roundRect(g, 55, 90, 640, 780, 36); g.fill();
+  g.textAlign = "center";
+  g.font = "64px sans-serif"; g.fillText("💌", 375, 210);
+  g.fillStyle = "#e8556e";
+  g.font = "bold 52px sans-serif"; g.fillText("约会确认书", 375, 300);
+  g.font = "26px sans-serif"; g.fillStyle = "#9a8d95";
+  g.fillText("已由本人郑重勾选 ♥", 375, 348);
+  g.textAlign = "left";
+  const rows = [["🕐","时间",picked.time],["📍","地点",picked.place],["💫","做什么",picked.act],["💌","备注","要见到你，不许迟到"]];
+  let y = 430;
+  const rightEdge = 55 + 640 - 28;          // 白卡右边界内缩 28
+  rows.forEach(([ico,k,v]) => {
+    g.font = "40px sans-serif"; g.fillText(ico, 100, y+8);
+    g.fillStyle = "#6d4c5b"; g.font = "bold 34px sans-serif"; g.fillText(k, 165, y);
+    // 值自适应：字号从 34 缩到 22 适配边框，仍放不下则截断
+    let fs = 34, text = String(v || "");
+    g.font = `${fs}px sans-serif`;
+    while (g.measureText(text).width > rightEdge - 270 && fs > 22) {
+      fs -= 2; g.font = `${fs}px sans-serif`;
+    }
+    while (g.measureText(text + "…").width > rightEdge - 270 && text.length > 4) {
+      text = text.slice(0, -1);
+    }
+    if (text !== String(v)) text += "…";
+    g.fillStyle = "#c2185b";
+    g.fillText(text, 270, y + (34 - fs) / 2);
+    y += 105;
+  });
+  g.textAlign = "center"; g.fillStyle = "#e8556e"; g.font = "30px sans-serif";
+  g.fillText("— 来自那个想和你约会的人 💘", 375, 880);
+  // 装饰爱心
+  g.font = "36px sans-serif";
+  g.fillText("💖", 140, 180); g.fillText("💗", 610, 850);
+  const box = document.getElementById("imgBox");
+  box.innerHTML = ""; box.appendChild(c);
+  c.style.width = "100%";
+};
+
+function roundRect(g,x,y,w,h,r) {
+  g.beginPath();
+  g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r);
+  g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath();
+}
+
+// ---- 躲猫猫的拒绝按钮 ----
+const noBtn = document.getElementById("noBtn");
+const noTexts = [
+  "再想想…", "再考虑一下嘛 🥺", "求求你了答应我好吗 🙏",
+  "不要，我就要和你约会 💢", "你忍心点我这么多次吗 😢",
+  "这个按钮坏掉了不管用 😤", "有本事你再点一次呀 👀",
+  "好吧其实你答应了对吧 😏", "爱你哟，就当答应了 💘",
+];
+let noCount = 0;
+function jumpNo() {
+  const pad = 20;
+  const w = noBtn.offsetWidth || 120, h = noBtn.offsetHeight || 48;
+  const x = pad + Math.random() * Math.max(10, window.innerWidth - w - pad*2);
+  const y = pad + Math.random() * Math.max(10, window.innerHeight - h - pad*2);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+noBtn.addEventListener("mouseenter", jumpNo);            // 桌面：鼠标靠近就跑
+noBtn.addEventListener("touchstart", e => { e.preventDefault(); jumpNo(); }, {passive:false}); // 手机：手指碰到就跑
+noBtn.addEventListener("click", e => {                    // 真被点中也只是换台词
+  e.preventDefault();
+  noCount = (noCount + 1) % noTexts.length;
+  noBtn.textContent = noTexts[noCount];
+  // 越点越小，小到极限就弹回来
+  const scale = Math.max(.45, 1 - noCount * .06);
+  noBtn.style.transform = `scale(${noCount >= 8 ? 1 : scale})`;
+  jumpNo();
+});
+jumpNo();
+
+// ---- 背景音乐：Web Audio 现场合成八音盒风原创旋律（零版权/零外链）----
+// Am-F-C-G 进行，琶音+高音旋律，循环往复。首次交互后自动响起（浏览器限制所致）。
+let audioCtx = null, masterGain = null, bgmMuted = false, bgmStarted = false;
+const N = { C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196.00,A3:220.00,B3:246.94,
+            C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,
+            C5:523.25,D5:587.33,E5:659.25,G5:783.99,A5:880.00 };
+// 和弦（八音盒琶音）与旋律点缀，每和弦 2 秒
+const PROG = [
+  { arp:[N.A3,N.E4,N.A4,N.C5], mel:N.E5 },   // Am
+  { arp:[N.F3,N.C4,N.F4,N.A4], mel:N.C5 },   // F
+  { arp:[N.C4,N.G4,N.C5,N.E5], mel:N.G5 },   // C
+  { arp:[N.G3,N.D4,N.G4,N.B4], mel:N.D5 },   // G
+];
+function musicBox(freq, when, dur, vol) {
+  // 八音盒音色：正弦主体 + 三倍频泛音增亮，快攻慢衰
+  const o = audioCtx.createOscillator(), o2 = audioCtx.createOscillator();
+  const g = audioCtx.createGain(), g2 = audioCtx.createGain();
+  o.type = "sine"; o.frequency.value = freq;
+  o2.type = "sine"; o2.frequency.value = freq * 3;
+  g2.gain.value = 0.18;
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(masterGain);
+  g.gain.setValueAtTime(0, when);
+  g.gain.linearRampToValueAtTime(vol, when + 0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+  o.start(when); o2.start(when);
+  o.stop(when + dur + 0.05); o2.stop(when + dur + 0.05);
+}
+function scheduleBar(barIndex) {
+  const step = 0.5, t0 = audioCtx.currentTime + 0.08;
+  const { arp, mel } = PROG[barIndex % PROG.length];
+  arp.forEach((f, i) => musicBox(f, t0 + i * step, 1.6, 0.22));
+  musicBox(mel, t0, 1.9, 0.10);                       // 高音旋律点缀
+}
+function startBgm() {
+  if (bgmStarted) return;
+  bgmStarted = true;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = bgmMuted ? 0 : 0.6;
+    masterGain.connect(audioCtx.destination);
+    let bar = 0;
+    scheduleBar(bar++);
+    setInterval(() => { if (!bgmMuted) scheduleBar(bar++); }, 2000);
+  } catch (e) { /* 无音频环境时静默跳过 */ }
+}
+// 浏览器要求交互后才能出声：首次任何点击/触摸即开始
+window.addEventListener("pointerdown", startBgm, { once: true });
+window.addEventListener("keydown", startBgm, { once: true });
+// 右上角开关
+const musicBtn = document.getElementById("musicBtn");
+musicBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  bgmMuted = !bgmMuted;
+  musicBtn.textContent = bgmMuted ? "🔇" : "🎵";
+  if (masterGain) masterGain.gain.value = bgmMuted ? 0 : 0.6;
+  if (!bgmStarted && !bgmMuted) startBgm();
+});
+</script>
+</body>
+</html>
