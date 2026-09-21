@@ -1,2 +1,6 @@
 .env
 __pycache__/
+video_frames/
+*.wav
+__pycache__/
+.chk_*.png
