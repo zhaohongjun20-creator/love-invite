@@ -4,3 +4,4 @@ video_frames/
 *.wav
 __pycache__/
 .chk_*.png
+btn_frames/
