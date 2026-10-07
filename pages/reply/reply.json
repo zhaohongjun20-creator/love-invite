@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "收到的邀请",
+  "usingComponents": {
+    "anime-girl": "/components/anime-girl/index"
+  }
+}

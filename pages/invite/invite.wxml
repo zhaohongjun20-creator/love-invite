@@ -22,6 +22,19 @@
   <!-- ============ 步骤 1：时间 ============ -->
   <view wx:if="{{step === 1}}" class="panel">
     <view class="opts">
+      <!-- 署名：对方收到邀请时知道是谁约的 -->
+      <view class="opt custom sender-row">
+        <text class="ico">🙋</text>
+        <input
+          class="ipt"
+          value="{{sender}}"
+          placeholder="署个名，让 TA 知道是谁（可不填）"
+          placeholder-class="ipt-ph"
+          maxlength="20"
+          bindinput="onSenderInput"
+        />
+      </view>
+
       <view
         wx:for="{{timeOptions}}"
         wx:key="value"

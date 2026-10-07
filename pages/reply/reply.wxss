@@ -1,0 +1,78 @@
+.wrap {
+  min-height: 100vh;
+  padding: 20rpx 48rpx 60rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.girl { margin-top: 4rpx; }
+.title { margin-top: 10rpx; text-align: center; }
+.tips { margin-top: 10rpx; text-align: center; }
+
+.input-card {
+  width: 100%;
+  margin-top: 40rpx;
+  padding: 44rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.code-input {
+  width: 100%;
+  text-align: center;
+  font-size: 60rpx;
+  font-weight: 700;
+  letter-spacing: 12rpx;
+  color: #e8556e;
+  font-family: "Courier New", monospace;
+  padding: 20rpx 0 26rpx;
+  border-bottom: 4rpx dashed #ffc9d4;
+  margin-bottom: 40rpx;
+}
+.code-ph { color: #e3c3cd; font-size: 40rpx; letter-spacing: 4rpx; font-weight: 400; }
+
+.list { width: 100%; margin-top: 30rpx; padding: 30rpx 32rpx; }
+.row { display: flex; flex-direction: column; padding: 14rpx 0; border-bottom: 2rpx dashed #ffe0ea; }
+.row:last-child { border-bottom: none; }
+.k { font-size: 25rpx; color: #b9a3ad; }
+.v { margin-top: 8rpx; font-size: 30rpx; color: #c2185b; font-weight: 600; line-height: 1.5; word-break: break-all; }
+
+.choose { width: 100%; margin-top: 26rpx; padding: 34rpx 32rpx; }
+.choose-label { font-size: 25rpx; color: #b9a3ad; margin-bottom: 18rpx; }
+.opt-row { display: flex; flex-wrap: wrap; }
+.opt-pill {
+  background: #fff5f8;
+  border: 2rpx solid #ffd6e2;
+  color: #b0395c;
+  border-radius: 999rpx;
+  padding: 16rpx 26rpx;
+  font-size: 27rpx;
+  margin: 0 16rpx 16rpx 0;
+}
+.opt-pill.on {
+  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  border-color: #e8556e;
+  color: #fff;
+  box-shadow: 0 8rpx 20rpx rgba(232, 85, 110, .3);
+}
+.line-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #c2185b;
+  padding: 22rpx 4rpx;
+  border-bottom: 2rpx solid #ffe0ea;
+  margin-bottom: 8rpx;
+}
+.choose .btn-main { margin-top: 34rpx; }
+
+.err {
+  margin-top: 22rpx;
+  font-size: 25rpx;
+  color: #d1495b;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.home { width: 100%; margin-top: 36rpx; }
+.safe-pad { height: 40rpx; }

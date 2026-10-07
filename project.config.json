@@ -17,7 +17,7 @@
     "minified": true,
     "newFeature": true,
     "coverView": true,
-    "nodeModules": false,
+    "nodeModules": true,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
@@ -31,6 +31,7 @@
     }
   },
   "compileType": "miniprogram",
+  "miniprogramRoot": "./",
   "libVersion": "3.5.5",
   "appid": "touristappid",
   "projectname": "love-date-miniprogram",

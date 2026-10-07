@@ -1,0 +1,9 @@
+{
+  "name": "love-date-miniprogram",
+  "version": "1.0.0",
+  "description": "约会小软件 · 二次元版（微信小程序）",
+  "private": true,
+  "dependencies": {
+    "@tencent-ai/workbuddy-cloud-sdk": "dev"
+  }
+}

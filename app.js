@@ -4,8 +4,7 @@ const STORAGE_KEY = 'love_date_plan';
 App({
   globalData: {
     plan: null,           // 当前约会计划 { time, place, act, note, date, createdAt }
-    charName: '小桃',      // 二次元角色昵称
-    notifyKey: ''         // Server酱 SendKey，可选：填了就自动微信推送
+    charName: '小桃'      // 二次元角色昵称
   },
 
   onLaunch() {

@@ -2,8 +2,12 @@
   "pages": [
     "pages/index/index",
     "pages/invite/invite",
+    "pages/invitecode/invitecode",
+    "pages/reply/reply",
+    "pages/mine/mine",
     "pages/lovecard/lovecard"
   ],
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "约会小软件",

@@ -1,0 +1,46 @@
+<view class="wrap">
+
+  <view class="h2 title">我发起的邀请</view>
+  <view class="sub tips">对方回没回，这里一眼就能看到</view>
+
+  <view wx:if="{{loading}}" class="state">正在从云端读取…</view>
+
+  <view wx:elif="{{error}}" class="state err">
+    {{error}}
+    <view class="btn-ghost retry" bindtap="onRefresh">重新读取</view>
+  </view>
+
+  <view wx:elif="{{!hasCodes}}" class="card empty">
+    <view class="empty-icon">📮</view>
+    <view class="h2">还没有发出过邀请</view>
+    <view class="sub">回封面点「发起约会邀请」，把邀请码发给 TA 吧</view>
+    <view class="btn-main empty-btn" bindtap="onGoInvite">去发起一个</view>
+  </view>
+
+  <block wx:else>
+    <view wx:for="{{list}}" wx:key="code" class="card item">
+      <view class="item-head">
+        <view class="chip {{item.answered ? 'done' : ''}}">{{item.answered ? '💗 TA 已回复' : '⏳ 等待回复'}}</view>
+        <view class="code-mini" data-code="{{item.code}}" bindtap="onCopy">{{item.code}}</view>
+      </view>
+
+      <view class="item-title">{{item.time}} · {{item.place}}</view>
+      <view class="item-sub">{{item.act}}</view>
+
+      <view wx:if="{{item.answered}}" class="answer">
+        <view class="answer-line"><text class="ak">答复</text><text class="av">{{item.answer}}</text></view>
+        <view wx:if="{{item.reply}}" class="answer-line"><text class="ak">补充</text><text class="av">{{item.reply}}</text></view>
+        <view wx:if="{{item.message}}" class="answer-line"><text class="ak">留言</text><text class="av">{{item.message}}</text></view>
+      </view>
+
+      <view class="item-foot">
+        <text class="time">{{item.created}}</text>
+        <text class="remove" data-code="{{item.code}}" bindtap="onDelete">移除</text>
+      </view>
+    </view>
+
+    <view class="btn-ghost refresh" bindtap="onRefresh">🔄 刷新回复状态</view>
+  </block>
+
+  <view class="safe-pad"></view>
+</view>

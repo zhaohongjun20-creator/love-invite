@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "邀请码",
+  "usingComponents": {
+    "anime-girl": "/components/anime-girl/index"
+  }
+}

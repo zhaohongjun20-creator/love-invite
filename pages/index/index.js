@@ -1,6 +1,7 @@
 // pages/index/index.js —— 封面
 const app = getApp();
 const music = require('../../utils/music.js');
+const { getCodes, fetchInvites } = require('../../utils/invite.js');
 const { LINES, pickRandom } = require('../../utils/options.js');
 
 Page({
@@ -11,7 +12,9 @@ Page({
     plan: null,
     countText: '',
     musicIcon: '🎵',
-    hearts: []
+    hearts: [],
+    hasCodes: false,
+    repliedCount: 0
   },
 
   onLoad() {
@@ -23,11 +26,24 @@ Page({
 
   onShow() {
     const plan = wx.getStorageSync('love_date_plan') || null;
+    const codes = getCodes();
     this.setData({
       plan,
       countText: this.buildCountText(plan),
-      musicIcon: music.muted ? '🔇' : '🎵'
+      musicIcon: music.muted ? '🔇' : '🎵',
+      hasCodes: codes.length > 0
     });
+    if (codes.length) this.refreshBadge(codes);
+  },
+
+  // 封面上的「有 N 条回复」角标；纯展示，失败就安静地不显示
+  async refreshBadge(codes) {
+    try {
+      const rows = await fetchInvites(codes.slice(0, 20));
+      this.setData({ repliedCount: rows.filter((r) => r.answered_at).length });
+    } catch (e) {
+      this.setData({ repliedCount: 0 });
+    }
   },
 
   onUnload() {
@@ -87,6 +103,15 @@ Page({
   onViewLast() {
     if (!this.data.plan) return;
     wx.navigateTo({ url: '/pages/lovecard/lovecard' });
+  },
+
+  onReply() {
+    if (!music.supported) music.start();
+    wx.navigateTo({ url: '/pages/reply/reply' });
+  },
+
+  onMine() {
+    wx.navigateTo({ url: '/pages/mine/mine' });
   },
 
   onShareAppMessage() {

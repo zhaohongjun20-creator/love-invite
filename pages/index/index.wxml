@@ -23,7 +23,13 @@
   <view class="slogan">和 {{charName}} 一起，把这一天定下来</view>
 
   <!-- 主按钮 -->
-  <view class="btn-main start-btn" catchtap="onStart">💌 开始约会邀请</view>
+  <view class="btn-main start-btn" catchtap="onStart">💌 发起约会邀请</view>
+
+  <!-- 次入口 -->
+  <view class="btn-ghost sub-btn" catchtap="onReply">🔑 我有邀请码 · 去答复 TA</view>
+  <view wx:if="{{hasCodes}}" class="btn-ghost sub-btn" catchtap="onMine">
+    📮 我发起的邀请{{repliedCount > 0 ? ' · 有 ' + repliedCount + ' 条回复' : ''}}
+  </view>
 
   <!-- 上次的约会 -->
   <view wx:if="{{plan}}" class="card last" catchtap="onViewLast">

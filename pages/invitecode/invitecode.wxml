@@ -1,0 +1,33 @@
+<view class="wrap">
+
+  <view class="girl">
+    <anime-girl mood="love" size="sm" />
+  </view>
+
+  <view class="h2 title">邀请发出去了！</view>
+  <view class="sub tips">把这串码发给 TA，TA 打开就能看到你的约会方案</view>
+
+  <!-- 邀请码 -->
+  <view class="card code-card">
+    <view class="code-label">约会邀请码</view>
+    <view class="code" bindtap="onCopyCode">{{code}}</view>
+    <view class="code-hint">{{copied ? '已复制 ✓' : '点一下复制'}}</view>
+  </view>
+
+  <!-- 方案回顾 -->
+  <view wx:if="{{plan}}" class="card list">
+    <view class="row"><text class="k">🕐 时间</text><text class="v">{{plan.time}}</text></view>
+    <view class="row"><text class="k">📍 地点</text><text class="v">{{plan.place}}</text></view>
+    <view class="row"><text class="k">💫 做什么</text><text class="v">{{plan.act}}</text></view>
+    <view wx:if="{{plan.note}}" class="row"><text class="k">💌 备注</text><text class="v">{{plan.note}}</text></view>
+  </view>
+
+  <view class="btns">
+    <button class="btn-main share" open-type="share">💘 直接发给 TA</button>
+    <view class="btn-ghost" bindtap="onCopyCode">📋 复制邀请码</view>
+    <view class="btn-ghost" bindtap="onCard">🖼️ 生成我的清单卡片</view>
+  </view>
+
+  <view class="hint">对方回完，你在「我发起的邀请」里就能看到 💓</view>
+  <view class="safe-pad"></view>
+</view>

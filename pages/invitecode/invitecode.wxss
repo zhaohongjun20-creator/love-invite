@@ -1,0 +1,51 @@
+.wrap {
+  min-height: 100vh;
+  padding: 20rpx 48rpx 60rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.girl { margin-top: 4rpx; }
+.title { margin-top: 10rpx; }
+.tips { margin-top: 10rpx; text-align: center; }
+
+.code-card {
+  width: 100%;
+  margin-top: 34rpx;
+  padding: 40rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.code-label { font-size: 25rpx; color: #b9a3ad; letter-spacing: 2rpx; }
+.code {
+  margin-top: 18rpx;
+  font-size: 92rpx;
+  font-weight: 700;
+  letter-spacing: 14rpx;
+  color: #e8556e;
+  text-indent: 14rpx;
+  font-family: "Courier New", monospace;
+}
+.code-hint { margin-top: 14rpx; font-size: 23rpx; color: #c9b3bd; }
+
+.list {
+  width: 100%;
+  margin-top: 26rpx;
+  padding: 30rpx 32rpx;
+}
+.row { display: flex; flex-direction: column; padding: 14rpx 0; border-bottom: 2rpx dashed #ffe0ea; }
+.row:last-child { border-bottom: none; }
+.k { font-size: 25rpx; color: #b9a3ad; }
+.v { margin-top: 8rpx; font-size: 30rpx; color: #c2185b; font-weight: 600; line-height: 1.5; word-break: break-all; }
+
+.btns { width: 100%; margin-top: 34rpx; display: flex; flex-direction: column; }
+.btns .btn-ghost { margin-top: 20rpx; }
+.share {
+  font-size: 34rpx;
+  padding: 26rpx 0;
+  line-height: normal;
+}
+.hint { margin-top: 26rpx; font-size: 23rpx; color: #b9a3ad; text-align: center; }
+.safe-pad { height: 40rpx; }

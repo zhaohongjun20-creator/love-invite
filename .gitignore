@@ -1,10 +1,10 @@
 # 立绘源图（每张 2.5MB，不进小程序包也不进 git）
 assets/raw/
 
-node_modules/
-.DS_Store
-
-# 旧版按钮动画录制的临时帧（生成物，不入库）
+# 旧版「按钮躲猫猫」录制留下的临时帧（本仓库历史遗留，非本项目产物）
 btn_frames/
 video_frames/
 button_cover.jpg
+
+node_modules/
+.DS_Store

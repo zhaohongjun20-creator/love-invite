@@ -1,0 +1,72 @@
+<view class="wrap">
+
+  <!-- ============ 1. 输入邀请码 ============ -->
+  <block wx:if="{{stage === 'input'}}">
+    <view class="girl"><anime-girl mood="excited" size="sm" /></view>
+    <view class="h2 title">收到邀请码啦？</view>
+    <view class="sub tips">把那 6 位码填进来，看看 TA 准备了什么</view>
+
+    <view class="card input-card">
+      <input
+        class="code-input"
+        value="{{code}}"
+        placeholder="邀请码"
+        placeholder-class="code-ph"
+        maxlength="12"
+        bindinput="onCodeInput"
+        bindconfirm="onLoadInvite"
+        confirm-type="search"
+      />
+      <view class="btn-main" bindtap="onLoadInvite">{{loading ? '查询中…' : '看看是什么'}}</view>
+      <view wx:if="{{error}}" class="err">{{error}}</view>
+    </view>
+  </block>
+
+  <!-- ============ 2. 看邀请并答复 ============ -->
+  <block wx:elif="{{stage === 'view'}}">
+    <view class="girl"><anime-girl mood="shy" size="sm" /></view>
+    <view class="h2 title">{{invite.sender || '那个人'}} 想约你出去</view>
+    <view class="sub tips">TA 已经想好了，就等你点头</view>
+
+    <view class="card list">
+      <view class="row"><text class="k">🕐 时间</text><text class="v">{{invite.time_text}}</text></view>
+      <view class="row"><text class="k">📍 地点</text><text class="v">{{invite.place}}</text></view>
+      <view class="row"><text class="k">💫 做什么</text><text class="v">{{invite.act}}</text></view>
+      <view wx:if="{{invite.note}}" class="row"><text class="k">💌 备注</text><text class="v">{{invite.note}}</text></view>
+    </view>
+
+    <view class="card choose">
+      <view class="choose-label">你的答复</view>
+      <view class="opt-row">
+        <view
+          wx:for="{{answers}}"
+          wx:key="*this"
+          class="opt-pill {{answer === item ? 'on' : ''}}"
+          data-v="{{item}}"
+          bindtap="onPickAnswer"
+        >{{item}}</view>
+      </view>
+      <input class="line-input" value="{{reply}}" placeholder="想改的话写一句（选填）" bindinput="onReplyInput" />
+      <input class="line-input" value="{{message}}" placeholder="给 TA 留句话（选填）" bindinput="onMessageInput" />
+      <view wx:if="{{error}}" class="err">{{error}}</view>
+      <view class="btn-main" bindtap="onSubmit">{{loading ? '发送中…' : '就这样回复 TA'}}</view>
+    </view>
+  </block>
+
+  <!-- ============ 3. 完成 ============ -->
+  <block wx:else>
+    <view class="girl"><anime-girl mood="happy" size="sm" /></view>
+    <view class="h2 title">回复好啦！</view>
+    <view class="sub tips">TA 那边马上就能看到 💌</view>
+
+    <view class="card list">
+      <view class="row"><text class="k">你的答复</text><text class="v">{{invite.answer}}</text></view>
+      <view wx:if="{{invite.reply}}" class="row"><text class="k">补充</text><text class="v">{{invite.reply}}</text></view>
+      <view wx:if="{{invite.message}}" class="row"><text class="k">留言</text><text class="v">{{invite.message}}</text></view>
+    </view>
+
+    <view class="btn-main home" bindtap="onHome">好，回家等 TA</view>
+  </block>
+
+  <view class="safe-pad"></view>
+</view>

@@ -1,6 +1,7 @@
 // pages/invite/invite.js —— 约会邀请主流程（时间 → 地点 → 干什么）
 const app = getApp();
 const music = require('../../utils/music.js');
+const { createInvite } = require('../../utils/invite.js');
 const {
   TIME_OPTIONS, PLACE_OPTIONS, ACT_OPTIONS, LINES, SWEET_WORDS, pickRandom
 } = require('../../utils/options.js');
@@ -27,6 +28,8 @@ Page({
     customTime: '',
     customPlace: '',
     customAct: '',
+    sender: '',
+    sending: false,
 
     today: '',
     dateValue: '',
@@ -123,6 +126,10 @@ Page({
     this.setData({ [key]: e.detail.value });
   },
 
+  onSenderInput(e) {
+    this.setData({ sender: e.detail.value });
+  },
+
   onCustomConfirm() {
     const step = this.data.step;
     const fb = {
@@ -178,42 +185,37 @@ Page({
 
   // ---------------- 收尾 ----------------
 
-  finish() {
+  async finish() {
+    if (this.data.sending) return;
     const plan = {
       time: this.picked.time,
       place: this.picked.place,
       act: this.picked.act,
       date: this.picked.date || '',
       note: pickRandom(SWEET_WORDS),
+      sender: (this.data.sender || '').trim() || '那个想约你的人',
       charName: app.globalData.charName,
       createdAt: Date.now()
     };
     app.savePlan(plan);
-    this.notifySender(plan);
-    this.setData({ mood: 'love' });
-    setTimeout(() => {
-      wx.redirectTo({ url: '/pages/lovecard/lovecard' });
-    }, 420);
-  },
+    this.setData({ mood: 'love', sending: true });
 
-  /**
-   * 可选：对方选完自动微信推送给你
-   * 用法：在 app.js 的 globalData.notifyKey 填入 Server酱 SendKey（sct.ftqq.com 免费领）
-   * 注意：小程序需在「开发管理 → 服务器域名 → request 合法域名」添加 https://sctapi.ftqq.com
-   */
-  notifySender(plan) {
-    const key = app.globalData.notifyKey;
-    if (!key) return;
-    wx.request({
-      url: `https://sctapi.ftqq.com/${key}.send`,
-      method: 'POST',
-      header: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {
-        title: '💌 约会邀请有回复啦',
-        desp: `💘 对方选好啦！\n\n🕐 时间：${plan.time}\n📍 地点：${plan.place}\n💫 做什么：${plan.act}\n\n快去准备吧，不许迟到 💌`
-      },
-      fail: () => {}
-    });
+    // 存到云端并换一个邀请码，对方凭码就能看到
+    try {
+      const code = await createInvite(plan);
+      wx.redirectTo({ url: '/pages/invitecode/invitecode?code=' + code });
+    } catch (e) {
+      // 不静默降级：说清楚云端没存上，同时本地的清单卡片照样能用
+      this.setData({ sending: false });
+      wx.showModal({
+        title: '邀请码没生成成功',
+        content: (e && e.message ? e.message : '云端暂时连不上') +
+          '\n\n先给你本地的约会清单卡片，稍后可以再发一次邀请。',
+        showCancel: false,
+        confirmText: '看看卡片',
+        success: () => wx.redirectTo({ url: '/pages/lovecard/lovecard' })
+      });
+    }
   },
 
   onShareAppMessage() {

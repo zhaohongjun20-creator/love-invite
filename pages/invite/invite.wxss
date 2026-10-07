@@ -104,6 +104,7 @@
   padding: 14rpx 20rpx;
 }
 .opt.custom:active { transform: none; background: #fff; box-shadow: none; }
+.opt.sender-row { margin-bottom: 28rpx; border-color: #ffc9d4; }
 .ipt {
   flex: 1;
   font-size: 28rpx;

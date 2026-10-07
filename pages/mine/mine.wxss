@@ -1,0 +1,91 @@
+.wrap {
+  min-height: 100vh;
+  padding: 30rpx 44rpx 60rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title { text-align: center; }
+.tips { margin-top: 10rpx; text-align: center; }
+
+.state {
+  margin-top: 80rpx;
+  font-size: 28rpx;
+  color: #b9a3ad;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.state.err { color: #d1495b; }
+.retry { margin-top: 28rpx; padding: 18rpx 40rpx; }
+
+.item {
+  width: 100%;
+  margin-top: 26rpx;
+  padding: 30rpx 32rpx;
+}
+.item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+.chip {
+  font-size: 23rpx;
+  color: #fff;
+  background: linear-gradient(135deg, #ffc078, #f59f5b);
+  border-radius: 999rpx;
+  padding: 8rpx 20rpx;
+}
+.chip.done { background: linear-gradient(135deg, #ff8fb0, #e8556e); }
+.code-mini {
+  font-family: "Courier New", monospace;
+  font-size: 27rpx;
+  letter-spacing: 4rpx;
+  color: #e8556e;
+  border: 2rpx dashed #ffc9d4;
+  border-radius: 12rpx;
+  padding: 6rpx 16rpx;
+}
+
+.item-title { font-size: 31rpx; font-weight: 600; color: #c2185b; line-height: 1.5; }
+.item-sub { margin-top: 8rpx; font-size: 27rpx; color: #9a8d95; line-height: 1.5; }
+
+.answer {
+  margin-top: 22rpx;
+  background: #fff6f9;
+  border: 2rpx solid #ffdce8;
+  border-radius: 18rpx;
+  padding: 20rpx 22rpx;
+}
+.answer-line { display: flex; align-items: baseline; }
+.answer-line + .answer-line { margin-top: 10rpx; }
+.ak { font-size: 23rpx; color: #b9a3ad; width: 76rpx; flex-shrink: 0; }
+.av { font-size: 28rpx; color: #b0395c; line-height: 1.5; word-break: break-all; }
+
+.item-foot {
+  margin-top: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.time { font-size: 22rpx; color: #c9b3bd; }
+.remove { font-size: 24rpx; color: #c9b3bd; padding: 6rpx 12rpx; }
+.remove:active { color: #d1495b; }
+
+.empty {
+  width: 100%;
+  margin-top: 80rpx;
+  padding: 70rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon { font-size: 84rpx; margin-bottom: 20rpx; }
+.empty .sub { margin-top: 12rpx; text-align: center; }
+.empty-btn { width: 100%; margin-top: 40rpx; }
+
+.refresh { width: 100%; margin-top: 34rpx; }
+.safe-pad { height: 40rpx; }
