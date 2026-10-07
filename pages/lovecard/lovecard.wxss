@@ -1,0 +1,109 @@
+.wrap {
+  min-height: 100vh;
+  padding: 20rpx 48rpx 60rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.girl { margin-top: 4rpx; }
+.title { margin-top: 10rpx; }
+.tips { margin-top: 10rpx; text-align: center; }
+
+.list {
+  width: 100%;
+  margin-top: 34rpx;
+  padding: 34rpx 32rpx;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  padding: 16rpx 0;
+  border-bottom: 2rpx dashed #ffe0ea;
+}
+.row:last-of-type { border-bottom: none; }
+.k { font-size: 25rpx; color: #b9a3ad; }
+.v {
+  margin-top: 8rpx;
+  font-size: 31rpx;
+  color: #c2185b;
+  font-weight: 600;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.count {
+  margin-top: 26rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  border-radius: 999rpx;
+  padding: 14rpx 0;
+  box-shadow: 0 10rpx 24rpx rgba(232, 85, 110, .28);
+}
+
+.btns {
+  width: 100%;
+  margin-top: 36rpx;
+  display: flex;
+  flex-direction: column;
+}
+.row2 {
+  display: flex;
+  margin: 20rpx 0;
+}
+.flex1 { flex: 1; }
+.row2 .btn-ghost:first-child { margin-right: 20rpx; }
+.share-btn {
+  font-size: 30rpx;
+  padding: 22rpx 0;
+  color: #e8556e;
+  background: rgba(255, 255, 255, .9);
+  border: 2rpx solid #ffc9d4;
+  border-radius: 999rpx;
+}
+
+.preview {
+  width: 100%;
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: rise .4s ease-out;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24rpx); }
+}
+.preview-img {
+  width: 100%;
+  border-radius: 30rpx;
+  box-shadow: 0 18rpx 44rpx rgba(232, 85, 110, .24);
+}
+.preview-tip {
+  margin-top: 18rpx;
+  font-size: 24rpx;
+  color: #b9a3ad;
+}
+.save-btn { width: 100%; margin-top: 24rpx; }
+
+.empty {
+  width: 100%;
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70rpx 40rpx;
+}
+.empty-icon { font-size: 84rpx; margin-bottom: 20rpx; }
+.empty-btn { width: 100%; margin-top: 40rpx; }
+
+.card-canvas {
+  position: fixed;
+  left: -2000px;
+  top: 0;
+  width: 375px;
+  height: 540px;
+}
+
+.safe-pad { height: 40rpx; }

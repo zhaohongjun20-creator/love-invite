@@ -1,0 +1,42 @@
+<view class="cover" bindtap="onTapAnywhere">
+
+  <!-- 飘落的爱心 -->
+  <view
+    wx:for="{{hearts}}"
+    wx:key="id"
+    class="bg-heart"
+    style="left:{{item.left}}; font-size:{{item.size}}rpx; animation-duration:{{item.dur}}s; animation-delay:{{item.delay}}s;"
+  >{{item.char}}</view>
+
+  <!-- 角色 -->
+  <view class="girl">
+    <anime-girl mood="{{mood}}" size="lg" />
+  </view>
+
+  <!-- 台词气泡 -->
+  <view class="bubble-wrap" catchtap="onChangeLine">
+    <view class="bubble">{{line}}</view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="title">约会小软件</view>
+  <view class="slogan">和 {{charName}} 一起，把这一天定下来</view>
+
+  <!-- 主按钮 -->
+  <view class="btn-main start-btn" catchtap="onStart">💌 开始约会邀请</view>
+
+  <!-- 上次的约会 -->
+  <view wx:if="{{plan}}" class="card last" catchtap="onViewLast">
+    <view class="last-head">
+      <text class="last-title">上次定下的约会</text>
+      <text wx:if="{{countText}}" class="countdown">{{countText}}</text>
+    </view>
+    <view class="last-row">🕐 {{plan.time}}</view>
+    <view class="last-row">📍 {{plan.place}}</view>
+    <view class="last-row">💫 {{plan.act}}</view>
+    <view class="last-tip">点这里查看清单卡片 →</view>
+  </view>
+
+  <!-- 音乐开关 -->
+  <view class="music-btn" catchtap="onToggleMusic">{{musicIcon}}</view>
+</view>

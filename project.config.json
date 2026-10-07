@@ -1,0 +1,46 @@
+{
+  "description": "约会小软件 · 二次元版（微信小程序）",
+  "packOptions": {
+    "ignore": [
+      { "type": "file", "value": "preview.html" },
+      { "type": "folder", "value": "assets/raw" },
+      { "type": "folder", "value": "tools" },
+      { "type": "folder", "value": "docs" }
+    ],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.5.5",
+  "appid": "touristappid",
+  "projectname": "love-date-miniprogram",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        { "name": "封面", "pathName": "pages/index/index", "query": "", "scene": null },
+        { "name": "邀请流程", "pathName": "pages/invite/invite", "query": "", "scene": null },
+        { "name": "约会清单", "pathName": "pages/lovecard/lovecard", "query": "", "scene": null }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "约会清单",
+  "usingComponents": {
+    "anime-girl": "/components/anime-girl/index"
+  }
+}

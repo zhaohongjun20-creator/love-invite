@@ -1,0 +1,106 @@
+/* app.wxss —— 全局样式 */
+page {
+  background: linear-gradient(165deg, #ffeaf1 0%, #ffd6e4 48%, #ffe0cf 100%);
+  min-height: 100%;
+  color: #6d4c5b;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 去除 button 默认边框 */
+button::after { border: none; }
+button { line-height: normal; }
+
+/* 主按钮 */
+.btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  border-radius: 999rpx;
+  padding: 26rpx 0;
+  box-shadow: 0 14rpx 32rpx rgba(232, 85, 110, .32);
+}
+.btn-main:active { transform: scale(.97); opacity: .92; }
+
+/* 次要按钮 */
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .9);
+  color: #e8556e;
+  font-size: 30rpx;
+  border: 2rpx solid #ffc9d4;
+  border-radius: 999rpx;
+  padding: 22rpx 0;
+  box-shadow: 0 10rpx 24rpx rgba(232, 85, 110, .14);
+}
+.btn-ghost:active { transform: scale(.97); background: #fff0f4; }
+
+/* 卡片 */
+.card {
+  background: rgba(255, 255, 255, .94);
+  border-radius: 36rpx;
+  box-shadow: 0 20rpx 50rpx rgba(238, 107, 122, .22);
+  padding: 40rpx 36rpx;
+}
+
+.h1 { font-size: 52rpx; font-weight: 700; color: #e8556e; letter-spacing: 2rpx; }
+.h2 { font-size: 42rpx; font-weight: 700; color: #e8556e; }
+.sub { font-size: 26rpx; color: #9a8d95; line-height: 1.7; }
+
+/* 说话气泡 */
+.bubble {
+  position: relative;
+  background: #fff;
+  border: 2rpx solid #ffd6e2;
+  border-radius: 28rpx;
+  padding: 24rpx 30rpx;
+  font-size: 30rpx;
+  line-height: 1.6;
+  color: #7a5a68;
+  box-shadow: 0 10rpx 26rpx rgba(232, 85, 110, .12);
+}
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -18rpx;
+  left: 50%;
+  margin-left: -14rpx;
+  width: 0;
+  height: 0;
+  border-left: 14rpx solid transparent;
+  border-right: 14rpx solid transparent;
+  border-top: 18rpx solid #ffd6e2;
+}
+.bubble::before {
+  content: "";
+  position: absolute;
+  bottom: -13rpx;
+  left: 50%;
+  margin-left: -12rpx;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 16rpx solid #fff;
+}
+
+/* 悬浮爱心背景 */
+.bg-heart {
+  position: fixed;
+  top: -60rpx;
+  font-size: 30rpx;
+  opacity: .55;
+  pointer-events: none;
+  animation: bgFall linear infinite;
+}
+@keyframes bgFall {
+  to { transform: translateY(115vh) rotate(360deg); opacity: .12; }
+}

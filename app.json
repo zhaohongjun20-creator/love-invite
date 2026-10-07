@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/invite/invite",
+    "pages/lovecard/lovecard"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "约会小软件",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ffeef3",
+    "backgroundTextStyle": "light",
+    "navigationStyle": "default"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

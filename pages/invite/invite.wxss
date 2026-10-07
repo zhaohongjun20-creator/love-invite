@@ -1,0 +1,161 @@
+.wrap {
+  min-height: 100vh;
+  padding: 24rpx 48rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------------- 步骤指示器 ---------------- */
+.steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 6rpx;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 96rpx;
+}
+.dot {
+  width: 46rpx;
+  height: 46rpx;
+  border-radius: 50%;
+  background: #ffe3ec;
+  color: #d2a5b4;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .25s;
+}
+.dot.on {
+  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  color: #fff;
+  box-shadow: 0 8rpx 18rpx rgba(232, 85, 110, .3);
+}
+.dot-label {
+  margin-top: 8rpx;
+  font-size: 21rpx;
+  color: #c4aab4;
+}
+.dot-label.on { color: #e8556e; font-weight: 600; }
+.step-line {
+  width: 88rpx;
+  height: 4rpx;
+  background: #ffe3ec;
+  border-radius: 4rpx;
+  margin-top: 22rpx;
+}
+.step-line.on { background: #ffb0c6; }
+
+/* ---------------- 角色 & 台词 ---------------- */
+.girl { margin-top: 6rpx; }
+
+.bubble-main {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 24rpx;
+  text-align: center;
+}
+
+/* ---------------- 选项面板 ---------------- */
+.panel {
+  width: 100%;
+  margin-top: 40rpx;
+  animation: rise .4s ease-out;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24rpx); }
+}
+
+.opts { display: flex; flex-direction: column; }
+
+.opt {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #fff3f6, #ffe6ee);
+  border: 2rpx solid #ffc9d4;
+  border-radius: 24rpx;
+  padding: 24rpx 26rpx;
+  margin-bottom: 18rpx;
+  transition: all .18s;
+}
+.opt:active {
+  transform: scale(1.02);
+  background: #ffd9e4;
+  box-shadow: 0 10rpx 22rpx rgba(232, 85, 110, .22);
+}
+.opt .ico { font-size: 40rpx; margin-right: 18rpx; }
+.opt .txt {
+  flex: 1;
+  font-size: 29rpx;
+  color: #b0395c;
+  line-height: 1.4;
+}
+
+/* 自定义输入 */
+.opt.custom {
+  background: #fff;
+  border-style: solid;
+  padding: 14rpx 20rpx;
+}
+.opt.custom:active { transform: none; background: #fff; box-shadow: none; }
+.ipt {
+  flex: 1;
+  font-size: 28rpx;
+  color: #c2185b;
+  padding: 10rpx 6rpx;
+}
+.ipt-ph { color: #d8aab6; font-size: 25rpx; }
+.mini {
+  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  color: #fff;
+  border-radius: 999rpx;
+  padding: 14rpx 24rpx;
+  font-size: 25rpx;
+  margin-left: 12rpx;
+  white-space: nowrap;
+}
+.mini:active { transform: scale(.94); opacity: .9; }
+
+/* 日期行 */
+.opt.date-row { padding: 16rpx 20rpx; flex-wrap: wrap; }
+.opt.date-row:active { transform: none; }
+.pk {
+  background: #fff6f9;
+  border: 2rpx dashed #f8b3c3;
+  border-radius: 14rpx;
+  padding: 10rpx 16rpx;
+  margin-right: 12rpx;
+}
+.pk-text { font-size: 26rpx; color: #c2185b; }
+
+/* 上一步 */
+.back {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #b9a3ad;
+  padding: 16rpx 30rpx;
+}
+.back:active { color: #e8556e; }
+
+.safe-pad { height: 200rpx; }
+
+/* ---------------- 躲猫猫拒绝按钮 ---------------- */
+.no-btn {
+  position: fixed;
+  z-index: 30;
+  background: #fff;
+  border: 2rpx dashed #f48fb1;
+  color: #f06292;
+  border-radius: 999rpx;
+  padding: 18rpx 34rpx;
+  font-size: 27rpx;
+  box-shadow: 0 10rpx 24rpx rgba(240, 98, 146, .25);
+  transition: left .18s ease-out, top .18s ease-out, transform .18s;
+  max-width: 60vw;
+}

@@ -1,0 +1,105 @@
+<!-- 二次元少女形象组件：AI 立绘 / WXSS 矢量 二选一 -->
+<view class="ag ag-{{size}} {{useImage ? 'mode-img' : 'mode-vec'}} mood-{{mood}}">
+  <view class="box">
+
+    <!-- 方案 A：AI 立绘（圆角相框） -->
+    <view wx:if="{{useImage}}" class="frame">
+      <image class="ag-img" src="{{imgSrc}}" mode="aspectFill" />
+    </view>
+
+    <!-- 方案 B：纯 WXSS 手绘矢量形象 -->
+    <view wx:else class="stage">
+      <view class="bob">
+
+        <!-- 双马尾（在最后面） -->
+        <view class="tail tail-l"></view>
+        <view class="tail tail-r"></view>
+
+        <!-- 后发 -->
+        <view class="hair-back"></view>
+
+        <!-- 身体 -->
+        <view class="body">
+          <view class="sailor"></view>
+          <view class="bow-chest">
+            <view class="wing w1"></view>
+            <view class="wing w2"></view>
+            <view class="knot"></view>
+          </view>
+        </view>
+
+        <!-- 脖子 -->
+        <view class="neck"></view>
+
+        <!-- 头 -->
+        <view class="head">
+          <!-- 刘海 -->
+          <view class="fringe"></view>
+          <view class="lock lock-l"></view>
+          <view class="lock lock-r"></view>
+
+          <!-- 呆毛 -->
+          <view class="ahoge"></view>
+
+          <!-- 眉毛 -->
+          <view class="brow brow-l"></view>
+          <view class="brow brow-r"></view>
+
+          <!-- 腮红 -->
+          <view class="blush blush-l"></view>
+          <view class="blush blush-r"></view>
+
+          <!-- 眼睛（普通 / 惊讶） -->
+          <view class="eye eye-l">
+            <view class="pupil">
+              <view class="shine"></view>
+            </view>
+            <view class="spark">✦</view>
+            <view class="lid"></view>
+          </view>
+          <view class="eye eye-r">
+            <view class="pupil">
+              <view class="shine"></view>
+            </view>
+            <view class="spark">✦</view>
+            <view class="lid"></view>
+          </view>
+
+          <!-- 开心：弯月眼 -->
+          <view class="arc arc-l"></view>
+          <view class="arc arc-r"></view>
+
+          <!-- 心动：爱心眼 -->
+          <view class="heart-eye heart-l">♥</view>
+          <view class="heart-eye heart-r">♥</view>
+
+          <!-- 嘴 -->
+          <view class="mouth"></view>
+
+          <!-- 发饰蝴蝶结 -->
+          <view class="bow bow-l">
+            <view class="wing w1"></view>
+            <view class="wing w2"></view>
+            <view class="knot"></view>
+          </view>
+          <view class="bow bow-r">
+            <view class="wing w1"></view>
+            <view class="wing w2"></view>
+            <view class="knot"></view>
+          </view>
+        </view>
+
+        <!-- 心动时飘出的爱心 -->
+        <view class="fly fly-1">♥</view>
+        <view class="fly fly-2">♥</view>
+        <view class="fly fly-3">♥</view>
+      </view>
+    </view>
+
+    <!-- 说话中的小点点 -->
+    <view wx:if="{{talking}}" class="talk-dots">
+      <view class="dot"></view><view class="dot"></view><view class="dot"></view>
+    </view>
+
+  </view>
+</view>

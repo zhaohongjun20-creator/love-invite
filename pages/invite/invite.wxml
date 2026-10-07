@@ -1,0 +1,139 @@
+<view class="wrap" bindtap="onAnyTap">
+
+  <!-- 步骤指示器 -->
+  <view class="steps">
+    <block wx:for="{{stepList}}" wx:key="n">
+      <view class="step-item">
+        <view class="dot {{step >= item.n ? 'on' : ''}}">{{item.n}}</view>
+        <text class="dot-label {{step >= item.n ? 'on' : ''}}">{{item.label}}</text>
+      </view>
+      <view wx:if="{{index < 2}}" class="step-line {{step > item.n ? 'on' : ''}}"></view>
+    </block>
+  </view>
+
+  <!-- 角色 -->
+  <view class="girl">
+    <anime-girl mood="{{mood}}" size="md" talking="{{picking}}" />
+  </view>
+
+  <!-- 台词 -->
+  <view class="bubble bubble-main">{{line}}</view>
+
+  <!-- ============ 步骤 1：时间 ============ -->
+  <view wx:if="{{step === 1}}" class="panel">
+    <view class="opts">
+      <view
+        wx:for="{{timeOptions}}"
+        wx:key="value"
+        class="opt"
+        data-v="{{item.value}}"
+        bindtap="onPick"
+      >
+        <text class="ico">{{item.icon}}</text>
+        <text class="txt">{{item.text}}</text>
+      </view>
+
+      <!-- 自定义文字 -->
+      <view class="opt custom">
+        <text class="ico">✍️</text>
+        <input
+          class="ipt"
+          value="{{customTime}}"
+          placeholder="写个时间吧，如：周三晚 7 点"
+          placeholder-class="ipt-ph"
+          confirm-type="done"
+          bindinput="onCustomInput"
+          data-key="customTime"
+          bindconfirm="onCustomConfirm"
+        />
+        <view class="mini" bindtap="onCustomConfirm">就这个！</view>
+      </view>
+
+      <!-- 精确选日期 -->
+      <view class="opt date-row">
+        <text class="ico">📅</text>
+        <picker class="pk" mode="date" value="{{dateValue}}" start="{{today}}" bindchange="onDateChange">
+          <view class="pk-text">{{dateValue || '选日期'}}</view>
+        </picker>
+        <picker class="pk" mode="time" value="{{timeValue}}" bindchange="onTimeChange">
+          <view class="pk-text">{{timeValue}}</view>
+        </picker>
+        <view class="mini" bindtap="onDateSubmit">定它！</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ============ 步骤 2：地点 ============ -->
+  <view wx:if="{{step === 2}}" class="panel">
+    <view class="opts">
+      <view
+        wx:for="{{placeOptions}}"
+        wx:key="value"
+        class="opt"
+        data-v="{{item.value}}"
+        bindtap="onPick"
+      >
+        <text class="ico">{{item.icon}}</text>
+        <text class="txt">{{item.text}}</text>
+      </view>
+
+      <view class="opt custom">
+        <text class="ico">✍️</text>
+        <input
+          class="ipt"
+          value="{{customPlace}}"
+          placeholder="写个地方吧，如：人民公园门口"
+          placeholder-class="ipt-ph"
+          confirm-type="done"
+          bindinput="onCustomInput"
+          data-key="customPlace"
+          bindconfirm="onCustomConfirm"
+        />
+        <view class="mini" bindtap="onCustomConfirm">就这里！</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ============ 步骤 3：干什么 ============ -->
+  <view wx:if="{{step === 3}}" class="panel">
+    <view class="opts">
+      <view
+        wx:for="{{actOptions}}"
+        wx:key="value"
+        class="opt"
+        data-v="{{item.value}}"
+        bindtap="onPick"
+      >
+        <text class="ico">{{item.icon}}</text>
+        <text class="txt">{{item.text}}</text>
+      </view>
+
+      <view class="opt custom">
+        <text class="ico">✍️</text>
+        <input
+          class="ipt"
+          value="{{customAct}}"
+          placeholder="写个想干的吧，如：一起拼一千片拼图"
+          placeholder-class="ipt-ph"
+          confirm-type="done"
+          bindinput="onCustomInput"
+          data-key="customAct"
+          bindconfirm="onCustomConfirm"
+        />
+        <view class="mini" bindtap="onCustomConfirm">就这个！</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 上一步 -->
+  <view wx:if="{{step > 1}}" class="back" bindtap="onBack">← 上一步</view>
+
+  <view class="safe-pad"></view>
+</view>
+
+<!-- 躲猫猫的拒绝按钮 -->
+<view
+  class="no-btn"
+  style="left:{{noLeft}}px; top:{{noTop}}px; transform:scale({{noScale}});"
+  catchtap="onNoTap"
+>{{noText}}</view>

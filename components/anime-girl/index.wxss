@@ -1,0 +1,322 @@
+/* ============================================================
+   二次元少女形象
+   A) AI 立绘（默认，见 config/character.js 的 useImage）
+   B) 纯 WXSS 手绘矢量形象（零图片兜底方案）
+   ============================================================ */
+
+.ag { position: relative; display: flex; justify-content: center; }
+.box { position: relative; }
+
+/* 容器高度按方案分别定义，两种模式互不干扰 */
+.ag.mode-img.ag-sm { height: 369rpx; }
+.ag.mode-img.ag-md { height: 511rpx; }
+.ag.mode-img.ag-lg { height: 624rpx; }
+.ag.mode-vec.ag-sm { height: 320rpx; }
+.ag.mode-vec.ag-md { height: 500rpx; }
+.ag.mode-vec.ag-lg { height: 580rpx; }
+
+/* ---------------- 方案 A：AI 立绘（圆角相框） ---------------- */
+.frame {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #ffe9ef;
+  border: 6rpx solid rgba(255, 255, 255, .94);
+  box-shadow: 0 18rpx 44rpx rgba(232, 85, 110, .26), 0 0 0 2rpx rgba(255, 201, 212, .85);
+  animation: frameIn .5s cubic-bezier(.2, 1.4, .4, 1);
+}
+@keyframes frameIn { from { opacity: 0; transform: scale(.93); } }
+.ag-sm .frame { width: 260rpx; height: 369rpx; border-radius: 28rpx; }
+.ag-md .frame { width: 360rpx; height: 511rpx; border-radius: 34rpx; }
+.ag-lg .frame { width: 440rpx; height: 624rpx; border-radius: 40rpx; }
+.ag-img { width: 100%; height: 100%; display: block; }
+
+/* ---------------- 方案 B：矢量形象 ---------------- */
+.stage { position: relative; width: 420rpx; height: 500rpx; }
+.ag-sm .stage { transform: scale(.62); transform-origin: top center; }
+.ag-lg .stage { transform: scale(1.14); transform-origin: top center; }
+
+.bob {
+  position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+  animation: bob 3.2s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14rpx); }
+}
+
+/* ---------------- 双马尾 ---------------- */
+.tail {
+  position: absolute; top: 128rpx; width: 78rpx; height: 250rpx;
+  background: linear-gradient(180deg, #f6a2c6, #e87ba8);
+  border-radius: 50% / 42% 42% 58% 58%;
+}
+.tail-l { left: 2rpx;  transform-origin: top center; animation: swayL 3.6s ease-in-out infinite; }
+.tail-r { right: 2rpx; transform-origin: top center; animation: swayR 3.6s ease-in-out infinite; }
+@keyframes swayL {
+  0%, 100% { transform: rotate(-13deg); }
+  50%      { transform: rotate(-21deg); }
+}
+@keyframes swayR {
+  0%, 100% { transform: rotate(13deg); }
+  50%      { transform: rotate(21deg); }
+}
+
+/* ---------------- 后发 ---------------- */
+.hair-back {
+  position: absolute; left: 42rpx; top: 34rpx; width: 336rpx; height: 362rpx;
+  background: linear-gradient(165deg, #f19ac1, #e0719f);
+  border-radius: 50%;
+}
+
+/* ---------------- 身体 ---------------- */
+.body {
+  position: absolute; left: 88rpx; top: 360rpx; width: 244rpx; height: 136rpx;
+  background: linear-gradient(180deg, #ffffff, #ffeff5);
+  border: 2rpx solid #ffdce8;
+  border-radius: 122rpx 122rpx 26rpx 26rpx;
+}
+.sailor {
+  position: absolute; left: 52rpx; top: 10rpx; width: 140rpx; height: 74rpx;
+  background: linear-gradient(180deg, #b7e0ff, #93cdf6);
+  border-radius: 10rpx 10rpx 70rpx 70rpx;
+  opacity: .95;
+}
+.bow-chest {
+  position: absolute; left: 50%; top: 56rpx; width: 58rpx; height: 46rpx;
+  margin-left: -29rpx;
+}
+.bow-chest .wing {
+  position: absolute; top: 0; width: 29rpx; height: 40rpx;
+  background: #ff8fb0; border-radius: 60% 40% 60% 40%;
+}
+.bow-chest .w1 { left: 0;  transform: rotate(-14deg); }
+.bow-chest .w2 { right: 0; transform: rotate(14deg) scaleX(-1); }
+.bow-chest .knot {
+  position: absolute; left: 50%; top: 50%; width: 18rpx; height: 18rpx;
+  margin: -9rpx 0 0 -9rpx; background: #ff6f9c; border-radius: 50%;
+}
+
+/* ---------------- 脖子 ---------------- */
+.neck {
+  position: absolute; left: 180rpx; top: 330rpx; width: 60rpx; height: 70rpx;
+  background: #f2c9b8; border-radius: 0 0 30rpx 30rpx;
+}
+
+/* ---------------- 头 ---------------- */
+.head {
+  position: absolute; left: 70rpx; top: 55rpx; width: 280rpx; height: 290rpx;
+  background: linear-gradient(180deg, #ffe9df, #ffd9c9);
+  border-radius: 50% 50% 46% 46% / 52% 52% 48% 48%;
+}
+
+/* 刘海 */
+.fringe {
+  position: absolute; left: -6rpx; top: -8rpx; width: 292rpx; height: 118rpx;
+  background: linear-gradient(180deg, #f9aecd, #ef90b7);
+  border-radius: 50% 50% 42% 42% / 72% 72% 28% 28%;
+}
+.lock {
+  position: absolute; top: 52rpx; width: 46rpx; height: 196rpx;
+  background: linear-gradient(180deg, #f5a3c7, #e88bb4);
+  border-radius: 24rpx 24rpx 40rpx 40rpx;
+}
+.lock-l { left: -8rpx; }
+.lock-r { right: -8rpx; }
+
+/* 呆毛 */
+.ahoge {
+  position: absolute; left: 194rpx; top: -30rpx; width: 11rpx; height: 74rpx;
+  background: #f6a2c6; border-radius: 11rpx;
+  transform-origin: bottom center;
+  animation: ahoge 2.8s ease-in-out infinite;
+}
+@keyframes ahoge {
+  0%, 100% { transform: rotate(18deg); }
+  50%      { transform: rotate(-10deg); }
+}
+
+/* 眉毛 */
+.brow {
+  position: absolute; top: 118rpx; width: 48rpx; height: 9rpx;
+  background: #dd8aa2; border-radius: 6rpx; opacity: .8;
+  transition: all .25s;
+}
+.brow-l { left: 50rpx;  transform: rotate(-8deg); }
+.brow-r { right: 50rpx; transform: rotate(8deg); }
+
+/* 腮红 */
+.blush {
+  position: absolute; top: 222rpx; width: 48rpx; height: 24rpx;
+  background: #ff9db4; border-radius: 50%; opacity: .4;
+  animation: blushPulse 3s ease-in-out infinite;
+}
+.blush-l { left: 20rpx; }
+.blush-r { right: 20rpx; }
+@keyframes blushPulse {
+  0%, 100% { opacity: .3; }
+  50%      { opacity: .62; }
+}
+
+/* 眼睛 */
+.eye {
+  position: absolute; top: 142rpx; width: 62rpx; height: 78rpx;
+  background: #fffdfe; border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 0 -6rpx 0 rgba(214, 178, 190, .28);
+  transition: transform .2s, opacity .2s;
+}
+.eye-l { left: 46rpx; }
+.eye-r { right: 46rpx; }
+.pupil {
+  position: absolute; left: 50%; top: 50%; width: 36rpx; height: 40rpx;
+  margin: -20rpx 0 0 -18rpx;
+  background: radial-gradient(circle at 34% 28%, #a99cf5, #5a49b8 70%, #3f3287);
+  border-radius: 50%;
+  transition: transform .25s;
+}
+.shine {
+  position: absolute; left: 5rpx; top: 4rpx; width: 13rpx; height: 13rpx;
+  background: #fff; border-radius: 50%;
+}
+.spark {
+  position: absolute; right: 2rpx; bottom: 2rpx;
+  font-size: 20rpx; color: #ffd166; opacity: 0;
+}
+/* 眼睑：眨眼 */
+.lid {
+  position: absolute; left: -2rpx; top: -2rpx; right: -2rpx; bottom: -2rpx;
+  background: #ffdfd1; border-radius: 50%;
+  transform-origin: top center;
+  transform: scaleY(0);
+  animation: blink 4.6s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(0); }
+  92%, 96%      { transform: scaleY(1); }
+}
+
+/* 弯月眼（开心） */
+.arc {
+  position: absolute; top: 158rpx; width: 56rpx; height: 34rpx;
+  border-top: 9rpx solid #5f4bc0;
+  border-radius: 60rpx 60rpx 0 0;
+  opacity: 0; transition: opacity .2s;
+}
+.arc-l { left: 49rpx; }
+.arc-r { right: 49rpx; }
+
+/* 爱心眼（心动） */
+.heart-eye {
+  position: absolute; top: 136rpx; width: 62rpx;
+  text-align: center; font-size: 58rpx; line-height: 84rpx;
+  color: #ff4d79; opacity: 0; transition: opacity .25s;
+}
+.heart-l { left: 46rpx; }
+.heart-r { right: 46rpx; }
+
+/* 嘴 */
+.mouth {
+  position: absolute; left: 50%; top: 246rpx; width: 36rpx; height: 18rpx;
+  margin-left: -18rpx; background: #e46b8a;
+  border-radius: 0 0 36rpx 36rpx;
+  transition: all .2s;
+}
+
+/* 发饰蝴蝶结 */
+.bow { position: absolute; width: 68rpx; height: 54rpx; }
+.bow .wing {
+  position: absolute; top: 0; width: 35rpx; height: 46rpx;
+  background: #ff8fb0; border-radius: 60% 40% 60% 40%;
+  box-shadow: 0 4rpx 10rpx rgba(232, 85, 110, .2);
+}
+.bow .w1 { left: 0;  transform: rotate(-14deg); }
+.bow .w2 { right: 0; transform: rotate(14deg) scaleX(-1); }
+.bow .knot {
+  position: absolute; left: 50%; top: 50%; width: 19rpx; height: 19rpx;
+  margin: -9rpx 0 0 -9rpx; background: #ff6f9c; border-radius: 50%;
+}
+.bow-l { left: -16rpx; top: 176rpx; transform: rotate(-12deg); }
+.bow-r { right: -16rpx; top: 176rpx; transform: rotate(12deg); }
+
+/* ---------------- 表情切换 ---------------- */
+
+/* 害羞 */
+.mood-shy .pupil { transform: translateY(10rpx); }
+.mood-shy .blush { animation-duration: 1.6s; }
+.mood-shy .blush-l { left: 16rpx; }
+.mood-shy .blush-r { right: 16rpx; }
+.mood-shy .mouth {
+  width: 17rpx; height: 19rpx; margin-left: -8rpx; border-radius: 50%;
+  top: 248rpx;
+}
+.mood-shy .brow-l { transform: rotate(11deg); top: 113rpx; }
+.mood-shy .brow-r { transform: rotate(-11deg); top: 113rpx; }
+
+/* 开心 */
+.mood-happy .eye { opacity: 0; }
+.mood-happy .arc { opacity: 1; }
+.mood-happy .mouth {
+  width: 50rpx; height: 27rpx; margin-left: -25rpx;
+  border-radius: 0 0 50rpx 50rpx;
+}
+.mood-happy .brow-l { transform: rotate(-11deg); }
+.mood-happy .brow-r { transform: rotate(11deg); }
+
+/* 激动 */
+.mood-excited .eye { transform: scale(1.12); }
+.mood-excited .pupil { transform: scale(1.1); }
+.mood-excited .spark { opacity: 1; animation: sparkle 1s ease-in-out infinite; }
+.mood-excited .mouth {
+  width: 44rpx; height: 38rpx; margin-left: -22rpx;
+  border-radius: 12rpx 12rpx 44rpx 44rpx; background: #d9557a;
+}
+@keyframes sparkle {
+  0%, 100% { transform: scale(.6) rotate(0deg); }
+  50%      { transform: scale(1.15) rotate(22deg); }
+}
+
+/* 心动 */
+.mood-love .eye { opacity: 0; }
+.mood-love .heart-eye { opacity: 1; }
+.mood-love .mouth {
+  width: 32rpx; height: 17rpx; margin-left: -16rpx;
+}
+.mood-love .blush { animation-duration: 1.3s; }
+.mood-love .brow-l { transform: rotate(-4deg); }
+.mood-love .brow-r { transform: rotate(4deg); }
+
+/* 心动飘出的爱心 */
+.fly { position: absolute; font-size: 34rpx; color: #ff6f9c; opacity: 0; }
+.fly-1 { left: 56rpx;  top: 120rpx; }
+.fly-2 { right: 62rpx; top: 168rpx; }
+.fly-3 { left: 128rpx; top: 76rpx; }
+.mood-love .fly { animation: floatHeart 2.4s ease-out infinite; }
+.mood-love .fly-1 { animation-delay: 0s; }
+.mood-love .fly-2 { animation-delay: .8s; }
+.mood-love .fly-3 { animation-delay: 1.6s; }
+@keyframes floatHeart {
+  0%   { transform: translateY(0) scale(.7);  opacity: 0; }
+  25%  { opacity: 1; }
+  100% { transform: translateY(-150rpx) scale(1.15); opacity: 0; }
+}
+
+/* ---------------- 说话小点点 ---------------- */
+.talk-dots {
+  position: absolute; right: 0; top: 24rpx;
+  display: flex; align-items: center;
+  background: #fff; border: 2rpx solid #ffd6e2;
+  border-radius: 999rpx; padding: 12rpx 18rpx;
+  box-shadow: 0 8rpx 20rpx rgba(232, 85, 110, .14);
+}
+.talk-dots .dot {
+  width: 10rpx; height: 10rpx; margin: 0 3rpx;
+  background: #ff8fb0; border-radius: 50%;
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+.talk-dots .dot:nth-child(2) { animation-delay: .18s; }
+.talk-dots .dot:nth-child(3) { animation-delay: .36s; }
+@keyframes dotPulse {
+  0%, 100% { transform: translateY(0);    opacity: .45; }
+  50%      { transform: translateY(-7rpx); opacity: 1; }
+}

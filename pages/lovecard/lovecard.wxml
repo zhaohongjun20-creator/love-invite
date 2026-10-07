@@ -1,0 +1,62 @@
+<view class="wrap">
+
+  <block wx:if="{{plan}}">
+    <!-- 角色 -->
+    <view class="girl">
+      <anime-girl mood="love" size="sm" />
+    </view>
+
+    <view class="h2 title">约会清单生成啦！</view>
+    <view class="sub tips">就这么说定啦，不许反悔哦 🥺</view>
+
+    <!-- 清单 -->
+    <view class="card list">
+      <view class="row">
+        <text class="k">🕐 时间</text>
+        <text class="v">{{plan.time}}</text>
+      </view>
+      <view class="row">
+        <text class="k">📍 地点</text>
+        <text class="v">{{plan.place}}</text>
+      </view>
+      <view class="row">
+        <text class="k">💫 做什么</text>
+        <text class="v">{{plan.act}}</text>
+      </view>
+      <view class="row">
+        <text class="k">💌 备注</text>
+        <text class="v">{{plan.note}}</text>
+      </view>
+      <view wx:if="{{countText}}" class="count">{{countText}}</view>
+    </view>
+
+    <!-- 操作 -->
+    <view class="btns">
+      <view class="btn-main" bindtap="onMakeCard">🖼️ 生成清单卡片</view>
+      <view class="row2">
+        <view class="btn-ghost flex1" bindtap="onCopy">📋 复制告白</view>
+        <button class="btn-ghost flex1 share-btn" open-type="share">💘 发给 TA</button>
+      </view>
+      <view class="btn-ghost" bindtap="onReset">🔄 重新定一次</view>
+    </view>
+
+    <!-- 卡片预览 -->
+    <view wx:if="{{cardImg}}" class="preview">
+      <image class="preview-img" src="{{cardImg}}" mode="widthFix" show-menu-by-longpress="{{true}}" />
+      <view class="preview-tip">长按图片可保存 / 转发</view>
+      <view class="btn-main save-btn" bindtap="onSaveCard">⬇️ 保存到相册</view>
+    </view>
+  </block>
+
+  <view wx:else class="card empty">
+    <view class="empty-icon">💭</view>
+    <view class="h2">还没有约会清单哦</view>
+    <view class="sub">先去邀请 TA 定一个吧～</view>
+    <view class="btn-main empty-btn" bindtap="onGoInvite">去定一个</view>
+  </view>
+
+  <view class="safe-pad"></view>
+
+  <!-- 离屏画布 -->
+  <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
+</view>

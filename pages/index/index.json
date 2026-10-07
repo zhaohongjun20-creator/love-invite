@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "约会小软件",
+  "usingComponents": {
+    "anime-girl": "/components/anime-girl/index"
+  }
+}
