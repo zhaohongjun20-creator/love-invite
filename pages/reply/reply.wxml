@@ -2,7 +2,7 @@
 
   <!-- ============ 1. 输入邀请码 ============ -->
   <block wx:if="{{stage === 'input'}}">
-    <view class="girl"><anime-girl mood="excited" size="sm" /></view>
+    <view class="girl"><anime-girl mood="excited" size="sm" set="{{charSet}}" /></view>
     <view class="h2 title">收到邀请码啦？</view>
     <view class="sub tips">把那 6 位码填进来，看看 TA 准备了什么</view>
 
@@ -24,7 +24,7 @@
 
   <!-- ============ 2. 看邀请并答复 ============ -->
   <block wx:elif="{{stage === 'view'}}">
-    <view class="girl"><anime-girl mood="shy" size="sm" /></view>
+    <view class="girl"><anime-girl mood="shy" size="sm" set="{{charSet}}" /></view>
     <view class="h2 title">{{invite.sender || '那个人'}} 想约你出去</view>
     <view class="sub tips">TA 已经想好了，就等你点头</view>
 
@@ -55,7 +55,7 @@
 
   <!-- ============ 3. 完成 ============ -->
   <block wx:else>
-    <view class="girl"><anime-girl mood="happy" size="sm" /></view>
+    <view class="girl"><anime-girl mood="happy" size="sm" set="{{charSet}}" /></view>
     <view class="h2 title">回复好啦！</view>
     <view class="sub tips">TA 那边马上就能看到 💌</view>
 

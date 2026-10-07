@@ -1,5 +1,6 @@
 // pages/lovecard/lovecard.js —— 约会清单 + 分享卡片
 const app = getApp();
+const character = require('../../utils/character.js');
 
 const CARD_W = 750;
 const CARD_H = 1080;
@@ -7,13 +8,14 @@ const CARD_H = 1080;
 Page({
   data: {
     plan: null,
+    charSet: 'girl',
     countText: '',
     cardImg: ''
   },
 
   onLoad() {
     const plan = wx.getStorageSync('love_date_plan') || app.globalData.plan || null;
-    this.setData({ plan, countText: this.buildCountText(plan) });
+    this.setData({ plan, countText: this.buildCountText(plan), charSet: character.currentKey() });
   },
 
   buildCountText(plan) {

@@ -1,24 +1,45 @@
 /**
- * 二次元角色配置 —— 形象方案的「一个开关」
+ * 二次元角色配置 —— 两套形象 + 矢量兜底
  *
- * 当前：useImage = true，使用 AI 生成的高精度立绘（韩漫 / 条漫风格）
- *   图片位置：assets/char/{normal,shy,happy,excited,love}.jpg
- *   规格：720×1021，约 190KB/张，5 张合计约 950KB（符合小程序主包 2MB 限制）
- *   源图（1024×1536、未裁水印）保留在 assets/raw/，已在 project.config.json
- *   与 .gitignore 中排除，不进包体。
+ * girl / boy 两套都是 AI 生成的韩漫（条漫）风格立绘，各 5 个表情。
+ * 同一套内的 5 张由同一张基准图「图生图」得到，所以是同一个角色、同一套衣服、同一个背景。
  *
- * 想退回纯 WXSS 矢量形象：把 useImage 改成 false 即可，页面代码无需改动。
+ * 想只用其中一套：把另一套的 useImage 改成 false（会退回纯 WXSS 矢量形象）。
+ * 想换立绘：替换 assets/char/{,male/}{normal,shy,happy,excited,love}.jpg 即可，页面代码不用动。
  *
  * 表情取值：normal（平常）shy（害羞）happy（开心）excited（激动）love（心动）
  */
-module.exports = {
-  name: '小桃',
-  useImage: true,
-  images: {
-    normal:  '/assets/char/normal.jpg',
-    shy:     '/assets/char/shy.jpg',
-    happy:   '/assets/char/happy.jpg',
-    excited: '/assets/char/excited.jpg',
-    love:    '/assets/char/love.jpg'
+
+const MOODS = ['normal', 'shy', 'happy', 'excited', 'love'];
+
+function build(dir) {
+  return MOODS.reduce((acc, m) => {
+    acc[m] = dir + '/' + m + '.jpg';
+    return acc;
+  }, {});
+}
+
+const SETS = {
+  girl: {
+    key: 'girl',
+    name: '小桃',
+    label: '女生',
+    avatar: '👧',
+    useImage: true,
+    images: build('/assets/char')
+  },
+  boy: {
+    key: 'boy',
+    name: '小川',
+    label: '男生',
+    avatar: '👦',
+    useImage: true,
+    images: build('/assets/char/male')
   }
+};
+
+module.exports = {
+  SETS,
+  MOODS,
+  DEFAULT_SET: 'girl'
 };

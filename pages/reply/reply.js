@@ -1,10 +1,12 @@
 // pages/reply/reply.js —— 凭邀请码查看并答复
 const { fetchInvites, answerInvite, normalizeCode } = require('../../utils/invite.js');
+const character = require('../../utils/character.js');
 
 Page({
   data: {
     stage: 'input',           // input | view | done
     code: '',
+    charSet: 'girl',
     invite: null,
     answers: ['🥰 我答应！', '🕐 想改个时间', '📍 换个地方好不好'],
     answer: '🥰 我答应！',
@@ -15,6 +17,7 @@ Page({
   },
 
   onLoad(query) {
+    this.setData({ charSet: character.currentKey() });
     // 从分享卡片进来会带上 code
     const code = normalizeCode(query && query.code);
     if (code && code.length >= 4) {

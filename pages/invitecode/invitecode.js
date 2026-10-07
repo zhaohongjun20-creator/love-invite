@@ -1,9 +1,11 @@
 // pages/invitecode/invitecode.js —— 邀请码展示 + 分享
 const { rememberCode } = require('../../utils/invite.js');
+const character = require('../../utils/character.js');
 
 Page({
   data: {
     code: '',
+    charSet: 'girl',
     plan: null,
     copied: false
   },
@@ -11,7 +13,7 @@ Page({
   onLoad(query) {
     const code = (query && query.code) || '';
     const plan = wx.getStorageSync('love_date_plan') || null;
-    this.setData({ code, plan });
+    this.setData({ code, plan, charSet: character.currentKey() });
     if (code) rememberCode(code);
   },
 

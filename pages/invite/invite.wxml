@@ -13,7 +13,7 @@
 
   <!-- 角色 -->
   <view class="girl">
-    <anime-girl mood="{{mood}}" size="md" talking="{{picking}}" />
+    <anime-girl mood="{{mood}}" size="md" set="{{charSet}}" talking="{{picking}}" />
   </view>
 
   <!-- 台词 -->

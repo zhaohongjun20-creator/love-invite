@@ -3,7 +3,7 @@
   <block wx:if="{{plan}}">
     <!-- 角色 -->
     <view class="girl">
-      <anime-girl mood="love" size="sm" />
+      <anime-girl mood="love" size="sm" set="{{charSet}}" />
     </view>
 
     <view class="h2 title">约会清单生成啦！</view>

@@ -10,7 +10,18 @@
 
   <!-- 角色 -->
   <view class="girl">
-    <anime-girl mood="{{mood}}" size="lg" />
+    <anime-girl mood="{{mood}}" size="lg" set="{{charSet}}" />
+  </view>
+
+  <!-- 角色切换：女生 / 男生 -->
+  <view class="char-switch">
+    <view
+      wx:for="{{charOptions}}"
+      wx:key="key"
+      class="cs-item {{charSet === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      catchtap="onSwitchChar"
+    >{{item.avatar}} {{item.label}}</view>
   </view>
 
   <!-- 台词气泡 -->
@@ -46,3 +57,10 @@
   <!-- 音乐开关 -->
   <view class="music-btn" catchtap="onToggleMusic">{{musicIcon}}</view>
 </view>
+
+<!-- 躲猫猫的拒绝按钮（和原版一样，第一屏就有） -->
+<view
+  class="no-btn"
+  style="left:{{noLeft}}px; top:{{noTop}}px; transform:scale({{noScale}});"
+  catchtap="onNoTap"
+>{{noText}}</view>

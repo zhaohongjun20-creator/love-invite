@@ -1,12 +1,16 @@
 // pages/index/index.js —— 封面
 const app = getApp();
 const music = require('../../utils/music.js');
+const dodge = require('../../utils/dodge.js');
+const character = require('../../utils/character.js');
 const { getCodes, fetchInvites } = require('../../utils/invite.js');
 const { LINES, pickRandom } = require('../../utils/options.js');
 
 Page({
   data: {
+    charSet: 'girl',
     charName: '小桃',
+    charOptions: [],
     mood: 'happy',
     line: '',
     plan: null,
@@ -14,26 +18,47 @@ Page({
     musicIcon: '🎵',
     hearts: [],
     hasCodes: false,
-    repliedCount: 0
+    repliedCount: 0,
+    // 躲猫猫拒绝按钮
+    noText: '再想想…',
+    noLeft: 210,
+    noTop: 600,
+    noScale: 1
   },
 
   onLoad() {
     this.setData({
       line: pickRandom(LINES.cover),
-      hearts: this.makeHearts()
+      hearts: this.makeHearts(),
+      charOptions: character.options()
     });
   },
 
   onShow() {
+    const setKey = character.currentKey();
+    const ch = character.getCharacter(setKey);
     const plan = wx.getStorageSync('love_date_plan') || null;
     const codes = getCodes();
     this.setData({
+      charSet: setKey,
+      charName: ch.name,
       plan,
       countText: this.buildCountText(plan),
       musicIcon: music.muted ? '🔇' : '🎵',
       hasCodes: codes.length > 0
     });
     if (codes.length) this.refreshBadge(codes);
+    dodge.jump(this);
+    dodge.startAuto(this);
+  },
+
+  onHide() {
+    dodge.stopAuto(this);
+  },
+
+  onUnload() {
+    dodge.stopAuto(this);
+    if (this.heartTimer) clearInterval(this.heartTimer);
   },
 
   // 封面上的「有 N 条回复」角标；纯展示，失败就安静地不显示
@@ -44,10 +69,6 @@ Page({
     } catch (e) {
       this.setData({ repliedCount: 0 });
     }
-  },
-
-  onUnload() {
-    if (this.heartTimer) clearInterval(this.heartTimer);
   },
 
   makeHearts() {
@@ -90,6 +111,16 @@ Page({
     this.setData({ mood: moods[Math.floor(Math.random() * moods.length)] });
   },
 
+  // 切换角色（女生 / 男生）
+  onSwitchChar(e) {
+    const key = e.currentTarget.dataset.key;
+    if (!key || key === this.data.charSet) return;
+    character.setCurrent(key);
+    const ch = character.getCharacter(key);
+    this.setData({ charSet: key, charName: ch.name, mood: 'happy' });
+    wx.showToast({ title: `换成 ${ch.name} 啦`, icon: 'none' });
+  },
+
   onToggleMusic() {
     const muted = music.toggle();
     this.setData({ musicIcon: muted ? '🔇' : '🎵' });
@@ -112,6 +143,11 @@ Page({
 
   onMine() {
     wx.navigateTo({ url: '/pages/mine/mine' });
+  },
+
+  // ---------------- 躲猫猫拒绝按钮 ----------------
+  onNoTap() {
+    dodge.tap(this);
   },
 
   onShareAppMessage() {
