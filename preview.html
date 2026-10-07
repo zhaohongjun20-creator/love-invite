@@ -810,42 +810,94 @@ noBtn.addEventListener('click', () => {
   jumpNo();
 });
 
-/* ================= 八音盒 BGM ================= */
-let ac=null, mg=null, muted=false, started=false, bar=0;
-const N={A3:220,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G3:196,G4:392,A4:440,B4:493.88,
-         C5:523.25,D5:587.33,E5:659.25,G5:783.99};
-const PROG=[
-  {arp:[N.A3,N.E4,N.A4,N.C5],mel:N.E5},
-  {arp:[N.F4*.5,N.C4,N.F4,N.A4],mel:N.C5},
-  {arp:[N.C4,N.G4,N.C5,N.E5],mel:N.G5},
-  {arp:[N.G3,N.D4,N.G4,N.B4],mel:N.D5}
-];
-function mbox(freq,when,dur,vol){
-  const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),g2=ac.createGain();
-  o.type='sine'; o.frequency.value=freq; o2.type='sine'; o2.frequency.value=freq*3; g2.gain.value=.16;
-  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(mg);
-  g.gain.setValueAtTime(0,when); g.gain.linearRampToValueAtTime(vol,when+.012);
-  g.gain.exponentialRampToValueAtTime(.0001,when+dur);
-  o.start(when); o2.start(when); o.stop(when+dur+.05); o2.stop(when+dur+.05);
+/* ================= BGM：F 大调 · 浪漫·激情版（与小程序同一套编曲） ================= */
+let ac=null, mg=null, muted=false, started=false, barIdx=0, nextBarT=0, bgmTimer=null;
+const SEMI={C:0,'C#':1,D:2,'D#':3,E:4,F:5,'F#':6,G:7,'G#':8,A:9,'A#':10,B:11};
+const FREQ={};
+function nf(name){
+  if(FREQ[name]) return FREQ[name];
+  const m=/^([A-G]#?)(\d)$/.exec(name); if(!m) return 440;
+  const midi=(parseInt(m[2],10)+1)*12+SEMI[m[1]];
+  FREQ[name]=440*Math.pow(2,(midi-69)/12); return FREQ[name];
 }
-function barPlay(){
-  const t0=ac.currentTime+.08, c=PROG[bar%PROG.length];
-  c.arp.forEach((f,i)=>mbox(f,t0+i*.5,1.6,.2));
-  mbox(c.mel,t0,1.9,.09); bar++;
+const BPM=112, BEAT=60/BPM, BAR=BEAT*4;
+const BARS=[
+  { bass:'F2',  pad:['F3','A3','C4','E4'],  arp:['F3','A3','C4','E4','F4','E4','C4','A3'],  mel:[['A4',0,2],['C5',2,2]] },
+  { bass:'C3',  pad:['C3','E3','G3','B3'],  arp:['C4','E4','G4','B4','C5','B4','G4','E4'],  mel:[['B4',0,1],['C5',1,1],['D5',2,2]] },
+  { bass:'D3',  pad:['D3','F3','A3','C4'],  arp:['D4','F4','A4','C5','D5','C5','A4','F4'],  mel:[['D5',0,2],['A4',2,2]] },
+  { bass:'A#2', pad:['A#2','D3','F3','A3'], arp:['A#3','D4','F4','A4','A#4','A4','F4','D4'], mel:[['C5',0,1.5],['D5',1.5,0.5],['F5',2,2]] },
+  { bass:'F2',  pad:['F3','A3','C4','E4'],  arp:['F3','C4','F4','A4','C5','A4','F4','C4'],  mel:[['E5',0,2],['C5',2,2]] },
+  { bass:'A2',  pad:['A2','C3','E3','G3'],  arp:['A3','C4','E4','G4','A4','G4','E4','C4'],  mel:[['A4',0,1],['C5',1,1],['E5',2,2]] },
+  { bass:'A#2', pad:['A#2','D3','F3','A3'], arp:['A#3','F4','A#4','D5','F5','D5','A#4','F4'], mel:[['D5',0,2],['C5',2,2]] },
+  { bass:'C3',  pad:['C3','E3','G3','A#3'], arp:['C4','G4','C5','E5','G5','E5','C5','G4'],  mel:[['B4',0,2],['C5',2,2]] }
+];
+function tone(hz,when,dur,vol,type,atk,rel){
+  if(!ac||!mg||!hz) return;
+  try{
+    const o=ac.createOscillator(), g=ac.createGain();
+    o.type=type||'sine'; o.frequency.value=hz;
+    o.connect(g); g.connect(mg);
+    g.gain.setValueAtTime(0,when);
+    g.gain.linearRampToValueAtTime(vol,when+(atk||0.01));
+    if(rel==='lin') g.gain.linearRampToValueAtTime(0.0001,when+dur);
+    else g.gain.exponentialRampToValueAtTime(0.0001,when+dur);
+    o.start(when); o.stop(when+dur+0.08);
+  }catch(e){}
+}
+function scheduleBar(t0,index){
+  const bar=BARS[index%BARS.length];
+  const dyn=0.72+0.46*((index%BARS.length)/(BARS.length-1));
+  tone(nf(bar.bass), t0, BEAT*1.5, 0.30*dyn, 'sine', 0.012);
+  tone(nf(bar.bass), t0+BEAT*2, BEAT*1.5, 0.26*dyn, 'sine', 0.012);
+  tone(nf(bar.bass), t0+BEAT*3.5, BEAT*0.5, 0.17*dyn, 'triangle', 0.008);
+  for(let i=0;i<bar.pad.length;i++) tone(nf(bar.pad[i]), t0, BAR*0.96, 0.050*dyn, 'triangle', 0.35, 'lin');
+  for(let i=0;i<bar.arp.length;i++){
+    const at=t0+i*(BEAT/2);
+    tone(nf(bar.arp[i]), at, BEAT*0.85, 0.105*dyn, 'triangle', 0.005);
+    tone(nf(bar.arp[i])*2, at, BEAT*0.40, 0.022*dyn, 'sine', 0.004);
+  }
+  for(let i=0;i<bar.mel.length;i++){
+    const nte=bar.mel[i], at=t0+nte[1]*BEAT, dur=nte[2]*BEAT*1.02;
+    tone(nf(nte[0]), at, dur, 0.155*dyn, 'sine', 0.045);
+    tone(nf(nte[0])*3, at, dur*0.5, 0.030*dyn, 'sine', 0.030);
+  }
+  const bi=index%BARS.length;
+  if(bi===0||bi===4){
+    const bells = bi===0 ? ['F5','A5','C6','F6'] : ['C6','A5','F5','C6'];
+    for(let i=0;i<bells.length;i++){
+      tone(nf(bells[i]), t0+i*(BEAT/2), 1.3, 0.055*dyn, 'sine', 0.006);
+      tone(nf(bells[i])*3, t0+i*(BEAT/2), 0.5, 0.012*dyn, 'sine', 0.006);
+    }
+  }
+}
+function bgmTick(){
+  if(!ac||muted) return;
+  try{
+    const now=ac.currentTime; let guard=0;
+    while(nextBarT<now+1.2 && guard++<2){
+      const t0=Math.max(nextBarT, now+0.06);
+      scheduleBar(t0, barIdx);
+      nextBarT=t0+BAR; barIdx+=1;
+    }
+  }catch(e){}
 }
 function startBgm(){
   if(started) return; started=true;
   try{
     ac=new (window.AudioContext||window.webkitAudioContext)();
     mg=ac.createGain(); mg.gain.value=muted?0:.5; mg.connect(ac.destination);
-    barPlay(); setInterval(()=>{ if(!muted) barPlay(); },2000);
+    nextBarT=ac.currentTime+0.1; barIdx=0;
+    bgmTick();
+    if(bgmTimer) clearInterval(bgmTimer);
+    bgmTimer=setInterval(bgmTick, 300);
   }catch(e){}
 }
 function toggleMusic(){
   muted=!muted;
   if(!started && !muted) startBgm();
   if(mg) mg.gain.value = muted?0:.5;
-  $('musicIcon').textContent = muted?'🔇':'🎵';
+  if(!muted && ac){ nextBarT=ac.currentTime+0.1; bgmTick(); }
+  $('musicIcon').textContent = muted?'\uD83D\uDD07':'\uD83C\uDFB5';
 }
 window.addEventListener('pointerdown', startBgm, {once:true});
 
