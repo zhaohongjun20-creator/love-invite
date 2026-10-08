@@ -34,7 +34,9 @@
 
 1. 打开 **微信开发者工具** → 导入项目 → 目录选 `love-date-miniprogram`
 2. AppID 选「**测试号**」（工程里已填 `touristappid`，可直接跑）
-3. **点一次菜单「工具 → 构建 npm」**（云服务的 SDK 是 npm 包，必须先构建一次）
+3. **「构建 npm」**：云服务 SDK 是 npm 包，运行前需要它的构建产物。
+   仓库里**已经带好了** `miniprogram_npm/@tencent-ai/workbuddy-cloud-sdk/miniprogram.js`，
+   所以这一步可以跳过；如果你改动了 `package.json`，再点一次「工具 → 构建 npm」重新生成即可。
 4. 编译即可看到封面页
 
 > 想立刻看效果但不想开开发者工具？直接双击 **`preview.html`**。
