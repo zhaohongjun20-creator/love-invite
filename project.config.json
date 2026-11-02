@@ -5,7 +5,8 @@
       { "type": "file", "value": "preview.html" },
       { "type": "folder", "value": "assets/raw" },
       { "type": "folder", "value": "tools" },
-      { "type": "folder", "value": "docs" }
+      { "type": "folder", "value": "docs" },
+      { "type": "folder", "value": "cloudfunctions" }
     ],
     "include": []
   },
@@ -32,6 +33,7 @@
   },
   "compileType": "miniprogram",
   "miniprogramRoot": "./",
+  "cloudfunctionRoot": "cloudfunctions/",
   "libVersion": "3.5.5",
   "appid": "touristappid",
   "projectname": "love-date-miniprogram",

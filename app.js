@@ -1,5 +1,6 @@
 // app.js —— 约会小软件 · 二次元版
 const STORAGE_KEY = 'love_date_plan';
+const cloudApi = require('./utils/cloud.js');
 
 App({
   globalData: {
@@ -8,6 +9,8 @@ App({
   },
 
   onLaunch() {
+    // 尽早初始化云开发（失败不影响启动，invite.js 里有离线兜底）
+    cloudApi.init();
     // 恢复上一次的约会计划（用于封面倒计时）
     try {
       const plan = wx.getStorageSync(STORAGE_KEY);
