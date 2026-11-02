@@ -2,6 +2,21 @@
 
 本项目的所有显著变更都记录在此。格式参照 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## [1.1.0] - 2026-11-02
+
+### 变更 🚚
+- **接口迁移：WorkBuddy HTTP 接口 → 微信云开发**
+  - 新增 `cloudfunctions/`：`date_invite_create / date_invite_get / date_invite_answer` 三个云函数，
+    数据集合 `date_invites` 首次调用自动创建；接口走 `wx.cloud.callFunction`，
+    不再需要配置「request 合法域名」，也不依赖接口域名的 ICP 备案（旧域名查无备案，是上线失败的根因）
+  - `utils/cloud.js` 重写为云开发调用层；`utils/invite.js` 对外签名不变，页面零改动
+  - 云函数内对全部 UGC（称呼/时间/地点/活动/留言/答复）接入 `security.msgSecCheck` 内容安全检测，
+    命中即拒（fail-open，服务异常放行并打日志）
+- **离线兜底**：云端未开通/未部署/失联时自动降级「本机演示模式」，同一台手机全流程可走，
+  每分钟自动重试恢复；审核场景下不会白屏
+- `project.config.json` 增加 `cloudfunctionRoot`，`cloudfunctions` 加入打包忽略
+- README 补充部署三步与个人主体提审清单
+
 ## [1.0.0] - 2026-10-06
 
 ### 重做 🎉
