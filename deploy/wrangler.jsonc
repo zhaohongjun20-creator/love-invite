@@ -1,0 +1,5 @@
+{
+  "name": "love-invite",
+  "compatibility_date": "2026-01-01",
+  "assets": { "directory": "./public" }
+}

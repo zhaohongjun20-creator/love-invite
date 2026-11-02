@@ -17,6 +17,7 @@ Page({
   },
 
   onLoad(query) {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     this.setData({ charSet: character.currentKey() });
     // 从分享卡片进来会带上 code
     const code = normalizeCode(query && query.code);

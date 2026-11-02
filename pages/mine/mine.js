@@ -1,4 +1,5 @@
 // pages/mine/mine.js —— 我发起的邀请 & 对方回复
+const character = require('../../utils/character.js');
 const { fetchInvites, getCodes, forgetCode } = require('../../utils/invite.js');
 
 Page({
@@ -10,6 +11,7 @@ Page({
   },
 
   onShow() {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     this.load();
   },
 

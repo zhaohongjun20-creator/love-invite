@@ -14,6 +14,7 @@ Page({
   },
 
   onLoad() {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     const plan = wx.getStorageSync('love_date_plan') || app.globalData.plan || null;
     this.setData({ plan, countText: this.buildCountText(plan), charSet: character.currentKey() });
   },

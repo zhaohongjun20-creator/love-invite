@@ -62,6 +62,7 @@ Page({
   },
 
   onShow() {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     this.setData({ charSet: character.currentKey() });
     dodge.jump(this);
     dodge.startAuto(this);

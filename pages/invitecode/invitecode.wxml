@@ -1,4 +1,4 @@
-<view class="wrap">
+<view class="theme-root wrap" style="{{themeStyle}}">
 
   <view class="girl">
     <anime-girl mood="love" size="sm" set="{{charSet}}" />

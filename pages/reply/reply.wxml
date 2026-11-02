@@ -1,4 +1,4 @@
-<view class="wrap">
+<view class="theme-root wrap" style="{{themeStyle}}">
 
   <!-- ============ 1. 输入邀请码 ============ -->
   <block wx:if="{{stage === 'input'}}">

@@ -33,4 +33,13 @@ function options() {
   }));
 }
 
-module.exports = { currentKey, setCurrent, getCharacter, options, SETS };
+/** 页面根节点内联主题变量（按角色换肤） */
+function themeStyle(ch) {
+  const t = (ch && ch.theme) || {};
+  const order = ['page','bg1','bg2','bg3','accent','accent2','accentDeep','mid','border','borderSoft','tint','tint2','opt1','opt2','shadow','shadow2','frameBg'];
+  return order.filter(k => t[k])
+    .map(k => '--fv-' + k.replace(/([A-Z])/g, '-$1').toLowerCase() + ':' + t[k])
+    .join(';');
+}
+
+module.exports = { currentKey, setCurrent, getCharacter, options, themeStyle, SETS };

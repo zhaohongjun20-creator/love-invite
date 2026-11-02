@@ -1,4 +1,4 @@
-<view class="wrap">
+<view class="theme-root wrap" style="{{themeStyle}}">
 
   <view class="h2 title">我发起的邀请</view>
   <view class="sub tips">对方回没回，这里一眼就能看到</view>

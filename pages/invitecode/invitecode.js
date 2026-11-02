@@ -11,6 +11,7 @@ Page({
   },
 
   onLoad(query) {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     const code = (query && query.code) || '';
     const plan = wx.getStorageSync('love_date_plan') || null;
     this.setData({ code, plan, charSet: character.currentKey() });

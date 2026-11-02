@@ -22,7 +22,7 @@ Page({
     // 躲猫猫拒绝按钮
     noText: '再想想…',
     noLeft: 210,
-    noTop: 600,
+    noTop: 900,
     noScale: 1
   },
 
@@ -35,6 +35,7 @@ Page({
   },
 
   onShow() {
+    this.setData({ themeStyle: character.themeStyle(character.getCharacter()) });
     const setKey = character.currentKey();
     const ch = character.getCharacter(setKey);
     const plan = wx.getStorageSync('love_date_plan') || null;
@@ -72,7 +73,7 @@ Page({
   },
 
   makeHearts() {
-    const chars = ['💖', '💗', '💓', '💘', '💕', '🌸'];
+    const chars = ['♥', '♡'];
     const list = [];
     for (let i = 0; i < 14; i++) {
       list.push({
@@ -117,7 +118,7 @@ Page({
     if (!key || key === this.data.charSet) return;
     character.setCurrent(key);
     const ch = character.getCharacter(key);
-    this.setData({ charSet: key, charName: ch.name, mood: 'happy' });
+    this.setData({ charSet: key, charName: ch.name, mood: 'happy', themeStyle: character.themeStyle(ch) });
     wx.showToast({ title: `换成 ${ch.name} 啦`, icon: 'none' });
   },
 

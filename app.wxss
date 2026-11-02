@@ -16,14 +16,14 @@ button { line-height: normal; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  background: linear-gradient(135deg, var(--fv-accent2), var(--fv-accent));
   color: #fff;
   font-size: 34rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
   border-radius: 999rpx;
   padding: 26rpx 0;
-  box-shadow: 0 14rpx 32rpx rgba(232, 85, 110, .32);
+  box-shadow: 0 14rpx 32rpx rgba(var(--fv-shadow), .32);
 }
 .btn-main:active { transform: scale(.97); opacity: .92; }
 
@@ -33,38 +33,38 @@ button { line-height: normal; }
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, .9);
-  color: #e8556e;
+  color: var(--fv-accent);
   font-size: 30rpx;
-  border: 2rpx solid #ffc9d4;
+  border: 2rpx solid var(--fv-border);
   border-radius: 999rpx;
   padding: 22rpx 0;
-  box-shadow: 0 10rpx 24rpx rgba(232, 85, 110, .14);
+  box-shadow: 0 10rpx 24rpx rgba(var(--fv-shadow), .14);
 }
-.btn-ghost:active { transform: scale(.97); background: #fff0f4; }
+.btn-ghost:active { transform: scale(.97); background: var(--fv-opt1); }
 
 /* 卡片 */
 .card {
   background: rgba(255, 255, 255, .94);
   border-radius: 36rpx;
-  box-shadow: 0 20rpx 50rpx rgba(238, 107, 122, .22);
+  box-shadow: 0 20rpx 50rpx rgba(var(--fv-shadow2), .22);
   padding: 40rpx 36rpx;
 }
 
-.h1 { font-size: 52rpx; font-weight: 700; color: #e8556e; letter-spacing: 2rpx; }
-.h2 { font-size: 42rpx; font-weight: 700; color: #e8556e; }
+.h1 { font-size: 52rpx; font-weight: 700; color: var(--fv-accent); letter-spacing: 2rpx; }
+.h2 { font-size: 42rpx; font-weight: 700; color: var(--fv-accent); }
 .sub { font-size: 26rpx; color: #9a8d95; line-height: 1.7; }
 
 /* 说话气泡 */
 .bubble {
   position: relative;
   background: #fff;
-  border: 2rpx solid #ffd6e2;
+  border: 2rpx solid var(--fv-border-soft);
   border-radius: 28rpx;
   padding: 24rpx 30rpx;
   font-size: 30rpx;
   line-height: 1.6;
   color: #7a5a68;
-  box-shadow: 0 10rpx 26rpx rgba(232, 85, 110, .12);
+  box-shadow: 0 10rpx 26rpx rgba(var(--fv-shadow), .12);
 }
 .bubble::after {
   content: "";
@@ -76,7 +76,7 @@ button { line-height: normal; }
   height: 0;
   border-left: 14rpx solid transparent;
   border-right: 14rpx solid transparent;
-  border-top: 18rpx solid #ffd6e2;
+  border-top: 18rpx solid var(--fv-border-soft);
 }
 .bubble::before {
   content: "";
@@ -94,6 +94,7 @@ button { line-height: normal; }
 
 /* 悬浮爱心背景 */
 .bg-heart {
+  color: var(--fv-accent);
   position: fixed;
   top: -60rpx;
   font-size: 30rpx;

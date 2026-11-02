@@ -24,7 +24,7 @@
   width: 46rpx;
   height: 46rpx;
   border-radius: 50%;
-  background: #ffe3ec;
+  background: var(--fv-tint);
   color: #d2a5b4;
   font-size: 24rpx;
   display: flex;
@@ -33,24 +33,24 @@
   transition: all .25s;
 }
 .dot.on {
-  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  background: linear-gradient(135deg, var(--fv-accent2), var(--fv-accent));
   color: #fff;
-  box-shadow: 0 8rpx 18rpx rgba(232, 85, 110, .3);
+  box-shadow: 0 8rpx 18rpx rgba(var(--fv-shadow), .3);
 }
 .dot-label {
   margin-top: 8rpx;
   font-size: 21rpx;
   color: #c4aab4;
 }
-.dot-label.on { color: #e8556e; font-weight: 600; }
+.dot-label.on { color: var(--fv-accent); font-weight: 600; }
 .step-line {
   width: 88rpx;
   height: 4rpx;
-  background: #ffe3ec;
+  background: var(--fv-tint);
   border-radius: 4rpx;
   margin-top: 22rpx;
 }
-.step-line.on { background: #ffb0c6; }
+.step-line.on { background: var(--fv-tint2); }
 
 /* ---------------- 角色 & 台词 ---------------- */
 .girl { margin-top: 6rpx; }
@@ -77,8 +77,8 @@
 .opt {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #fff3f6, #ffe6ee);
-  border: 2rpx solid #ffc9d4;
+  background: linear-gradient(135deg, var(--fv-opt1), var(--fv-opt2));
+  border: 2rpx solid var(--fv-border);
   border-radius: 24rpx;
   padding: 24rpx 26rpx;
   margin-bottom: 18rpx;
@@ -86,14 +86,14 @@
 }
 .opt:active {
   transform: scale(1.02);
-  background: #ffd9e4;
-  box-shadow: 0 10rpx 22rpx rgba(232, 85, 110, .22);
+  background: var(--fv-tint2);
+  box-shadow: 0 10rpx 22rpx rgba(var(--fv-shadow), .22);
 }
 .opt .ico { font-size: 40rpx; margin-right: 18rpx; }
 .opt .txt {
   flex: 1;
   font-size: 29rpx;
-  color: #b0395c;
+  color: var(--fv-mid);
   line-height: 1.4;
 }
 
@@ -104,16 +104,16 @@
   padding: 14rpx 20rpx;
 }
 .opt.custom:active { transform: none; background: #fff; box-shadow: none; }
-.opt.sender-row { margin-bottom: 28rpx; border-color: #ffc9d4; }
+.opt.sender-row { margin-bottom: 28rpx; border-color: var(--fv-border); }
 .ipt {
   flex: 1;
   font-size: 28rpx;
-  color: #c2185b;
+  color: var(--fv-accent-deep);
   padding: 10rpx 6rpx;
 }
 .ipt-ph { color: #d8aab6; font-size: 25rpx; }
 .mini {
-  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  background: linear-gradient(135deg, var(--fv-accent2), var(--fv-accent));
   color: #fff;
   border-radius: 999rpx;
   padding: 14rpx 24rpx;
@@ -127,13 +127,13 @@
 .opt.date-row { padding: 16rpx 20rpx; flex-wrap: wrap; }
 .opt.date-row:active { transform: none; }
 .pk {
-  background: #fff6f9;
+  background: var(--fv-opt1);
   border: 2rpx dashed #f8b3c3;
   border-radius: 14rpx;
   padding: 10rpx 16rpx;
   margin-right: 12rpx;
 }
-.pk-text { font-size: 26rpx; color: #c2185b; }
+.pk-text { font-size: 26rpx; color: var(--fv-accent-deep); }
 
 /* 上一步 */
 .back {
@@ -142,7 +142,7 @@
   color: #b9a3ad;
   padding: 16rpx 30rpx;
 }
-.back:active { color: #e8556e; }
+.back:active { color: var(--fv-accent); }
 
 .safe-pad { height: 200rpx; }
 
@@ -151,12 +151,12 @@
   position: fixed;
   z-index: 30;
   background: #fff;
-  border: 2rpx dashed #f48fb1;
-  color: #f06292;
+  border: 2rpx dashed var(--fv-accent2);
+  color: var(--fv-accent);
   border-radius: 999rpx;
   padding: 18rpx 34rpx;
   font-size: 27rpx;
-  box-shadow: 0 10rpx 24rpx rgba(240, 98, 146, .25);
+  box-shadow: 0 10rpx 24rpx rgba(var(--fv-shadow), .25);
   transition: left .18s ease-out, top .18s ease-out, transform .18s;
   max-width: 60vw;
 }

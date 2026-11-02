@@ -24,7 +24,7 @@
   font-size: 92rpx;
   font-weight: 700;
   letter-spacing: 14rpx;
-  color: #e8556e;
+  color: var(--fv-accent);
   text-indent: 14rpx;
   font-family: "Courier New", monospace;
 }
@@ -35,10 +35,10 @@
   margin-top: 26rpx;
   padding: 30rpx 32rpx;
 }
-.row { display: flex; flex-direction: column; padding: 14rpx 0; border-bottom: 2rpx dashed #ffe0ea; }
+.row { display: flex; flex-direction: column; padding: 14rpx 0; border-bottom: 2rpx dashed var(--fv-border-soft); }
 .row:last-child { border-bottom: none; }
 .k { font-size: 25rpx; color: #b9a3ad; }
-.v { margin-top: 8rpx; font-size: 30rpx; color: #c2185b; font-weight: 600; line-height: 1.5; word-break: break-all; }
+.v { margin-top: 8rpx; font-size: 30rpx; color: var(--fv-accent-deep); font-weight: 600; line-height: 1.5; word-break: break-all; }
 
 .btns { width: 100%; margin-top: 34rpx; display: flex; flex-direction: column; }
 .btns .btn-ghost { margin-top: 20rpx; }

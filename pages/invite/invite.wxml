@@ -1,4 +1,4 @@
-<view class="wrap" bindtap="onAnyTap">
+<view class="theme-root wrap" style="{{themeStyle}}" bindtap="onAnyTap">
 
   <!-- 步骤指示器 -->
   <view class="steps">

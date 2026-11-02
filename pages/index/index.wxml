@@ -1,4 +1,4 @@
-<view class="cover" bindtap="onTapAnywhere">
+<view class="theme-root cover" style="{{themeStyle}}" bindtap="onTapAnywhere">
 
   <!-- 飘落的爱心 -->
   <view

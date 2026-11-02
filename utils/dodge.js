@@ -23,14 +23,14 @@ function win() {
 
 /** 塞进 Page.data 的初始值 */
 function initialState() {
-  return { noText: TEXTS[0], noLeft: 210, noTop: 600, noScale: 1 };
+  return { noText: TEXTS[0], noLeft: 210, noTop: 900, noScale: 1 };
 }
 
 function jump(page) {
   const { windowWidth: w, windowHeight: h } = win();
   const bw = 160, bh = 60, pad = 16;
   const left = pad + Math.random() * Math.max(10, w - bw - pad * 2);
-  const top = 150 + Math.random() * Math.max(10, h - bh - 300);
+  const top = 430 + Math.random() * Math.max(10, h - bh - 560);
   page.setData({ noLeft: Math.round(left), noTop: Math.round(top) });
 }
 

@@ -16,7 +16,7 @@
   display: flex;
   margin-top: 22rpx;
   background: rgba(255, 255, 255, .72);
-  border: 2rpx solid #ffd6e2;
+  border: 2rpx solid var(--fv-border-soft);
   border-radius: 999rpx;
   padding: 6rpx;
 }
@@ -24,12 +24,12 @@
   padding: 12rpx 32rpx;
   border-radius: 999rpx;
   font-size: 26rpx;
-  color: #b0395c;
+  color: var(--fv-mid);
 }
 .cs-item.on {
-  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  background: linear-gradient(135deg, var(--fv-accent2), var(--fv-accent));
   color: #fff;
-  box-shadow: 0 6rpx 16rpx rgba(232, 85, 110, .28);
+  box-shadow: 0 6rpx 16rpx rgba(var(--fv-shadow), .28);
 }
 
 .bubble-wrap { width: 100%; margin-top: 28rpx; }
@@ -38,9 +38,9 @@
   margin-top: 44rpx;
   font-size: 58rpx;
   font-weight: 700;
-  color: #e8556e;
+  color: var(--fv-accent);
   letter-spacing: 6rpx;
-  text-shadow: 0 6rpx 16rpx rgba(232, 85, 110, .18);
+  text-shadow: 0 6rpx 16rpx rgba(var(--fv-shadow), .18);
 }
 
 .slogan {
@@ -71,11 +71,11 @@
   justify-content: space-between;
   margin-bottom: 16rpx;
 }
-.last-title { font-size: 30rpx; font-weight: 600; color: #e8556e; }
+.last-title { font-size: 30rpx; font-weight: 600; color: var(--fv-accent); }
 .countdown {
   font-size: 24rpx;
   color: #fff;
-  background: linear-gradient(135deg, #ff8fb0, #e8556e);
+  background: linear-gradient(135deg, var(--fv-accent2), var(--fv-accent));
   border-radius: 999rpx;
   padding: 6rpx 18rpx;
 }
@@ -103,12 +103,12 @@
   height: 84rpx;
   border-radius: 50%;
   background: rgba(255, 255, 255, .92);
-  border: 2rpx solid #ffc9d4;
+  border: 2rpx solid var(--fv-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40rpx;
-  box-shadow: 0 10rpx 26rpx rgba(232, 85, 110, .2);
+  box-shadow: 0 10rpx 26rpx rgba(var(--fv-shadow), .2);
 }
 
 /* 躲猫猫的拒绝按钮 */
@@ -116,12 +116,12 @@
   position: fixed;
   z-index: 30;
   background: #fff;
-  border: 2rpx dashed #f48fb1;
-  color: #f06292;
+  border: 2rpx dashed var(--fv-accent2);
+  color: var(--fv-accent);
   border-radius: 999rpx;
   padding: 18rpx 34rpx;
   font-size: 27rpx;
-  box-shadow: 0 10rpx 24rpx rgba(240, 98, 146, .25);
+  box-shadow: 0 10rpx 24rpx rgba(var(--fv-shadow), .25);
   transition: left .18s ease-out, top .18s ease-out, transform .18s;
   max-width: 60vw;
 }

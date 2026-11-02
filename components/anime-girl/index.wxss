@@ -20,9 +20,9 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  background: #ffe9ef;
+  background: var(--fv-frame-bg);
   border: 6rpx solid rgba(255, 255, 255, .94);
-  box-shadow: 0 18rpx 44rpx rgba(232, 85, 110, .26), 0 0 0 2rpx rgba(255, 201, 212, .85);
+  box-shadow: 0 18rpx 44rpx rgba(var(--fv-shadow), .26), 0 0 0 2rpx rgba(255, 201, 212, .85);
   animation: frameIn .5s cubic-bezier(.2, 1.4, .4, 1);
 }
 @keyframes frameIn { from { opacity: 0; transform: scale(.93); } }
@@ -73,7 +73,7 @@
 .body {
   position: absolute; left: 88rpx; top: 360rpx; width: 244rpx; height: 136rpx;
   background: linear-gradient(180deg, #ffffff, #ffeff5);
-  border: 2rpx solid #ffdce8;
+  border: 2rpx solid var(--fv-border-soft);
   border-radius: 122rpx 122rpx 26rpx 26rpx;
 }
 .sailor {
@@ -88,7 +88,7 @@
 }
 .bow-chest .wing {
   position: absolute; top: 0; width: 29rpx; height: 40rpx;
-  background: #ff8fb0; border-radius: 60% 40% 60% 40%;
+  background: var(--fv-accent2); border-radius: 60% 40% 60% 40%;
 }
 .bow-chest .w1 { left: 0;  transform: rotate(-14deg); }
 .bow-chest .w2 { right: 0; transform: rotate(14deg) scaleX(-1); }
@@ -227,8 +227,8 @@
 .bow { position: absolute; width: 68rpx; height: 54rpx; }
 .bow .wing {
   position: absolute; top: 0; width: 35rpx; height: 46rpx;
-  background: #ff8fb0; border-radius: 60% 40% 60% 40%;
-  box-shadow: 0 4rpx 10rpx rgba(232, 85, 110, .2);
+  background: var(--fv-accent2); border-radius: 60% 40% 60% 40%;
+  box-shadow: 0 4rpx 10rpx rgba(var(--fv-shadow), .2);
 }
 .bow .w1 { left: 0;  transform: rotate(-14deg); }
 .bow .w2 { right: 0; transform: rotate(14deg) scaleX(-1); }
@@ -305,13 +305,13 @@
 .talk-dots {
   position: absolute; right: 0; top: 24rpx;
   display: flex; align-items: center;
-  background: #fff; border: 2rpx solid #ffd6e2;
+  background: #fff; border: 2rpx solid var(--fv-border-soft);
   border-radius: 999rpx; padding: 12rpx 18rpx;
-  box-shadow: 0 8rpx 20rpx rgba(232, 85, 110, .14);
+  box-shadow: 0 8rpx 20rpx rgba(var(--fv-shadow), .14);
 }
 .talk-dots .dot {
   width: 10rpx; height: 10rpx; margin: 0 3rpx;
-  background: #ff8fb0; border-radius: 50%;
+  background: var(--fv-accent2); border-radius: 50%;
   animation: dotPulse 1.2s ease-in-out infinite;
 }
 .talk-dots .dot:nth-child(2) { animation-delay: .18s; }
